@@ -1,4 +1,4 @@
-package org.academiadecodigo.stringrays.cards;
+package org.academiadecodigo.stringrays.game.cards;
 
 public class Card {
 

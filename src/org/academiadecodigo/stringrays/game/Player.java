@@ -1,10 +1,8 @@
-package org.academiadecodigo.stringrays;
+package org.academiadecodigo.stringrays.game;
 
 
-import org.academiadecodigo.stringrays.cards.Card;
-import org.academiadecodigo.stringrays.cards.Deck;
-
-import java.util.ArrayList;
+import org.academiadecodigo.stringrays.game.cards.Card;
+import org.academiadecodigo.stringrays.game.cards.Deck;
 
 public class Player {
 

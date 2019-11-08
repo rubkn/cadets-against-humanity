@@ -1,14 +1,18 @@
-package org.academiadecodigo.stringrays;
+package org.academiadecodigo.stringrays.network;
+
+import org.academiadecodigo.stringrays.Player;
 
 import java.net.Socket;
-import java.util.Vector;
 
 public class PlayerHandler implements Runnable {
 
-    private Vector<PlayerHandler> players;
     private Socket playerSocket;
+    private Player player;
 
-    public PlayerHandler (Player player)
+    public PlayerHandler (Socket playerSocket, Player player) {
+        this.playerSocket = playerSocket;
+        this.player = player;
+    }
 
     @Override
     public void run() {

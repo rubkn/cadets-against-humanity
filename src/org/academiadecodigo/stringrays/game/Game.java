@@ -1,7 +1,8 @@
-package org.academiadecodigo.stringrays;
+package org.academiadecodigo.stringrays.game;
 
-import org.academiadecodigo.stringrays.cards.Card;
-import org.academiadecodigo.stringrays.cards.Deck;
+import org.academiadecodigo.stringrays.Player;
+import org.academiadecodigo.stringrays.game.cards.Card;
+import org.academiadecodigo.stringrays.game.cards.Deck;
 
 import java.io.BufferedReader;
 import java.io.File;
