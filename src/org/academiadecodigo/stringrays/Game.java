@@ -7,20 +7,25 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Vector;
 
 public class Game {
 
     private Deck blackDeck;
     private Deck whiteDeck;
+    private Vector<Player> players;
 
     public void init() {
 
         blackDeck = new Deck();
         whiteDeck = new Deck();
+        players = new Vector<>();
 
         try {
             setupDeck(blackDeck, "resources/black-cards.txt");
             setupDeck(whiteDeck, "resources/white-cards.txt");
+
+
         } catch (IOException exc) {
             exc.printStackTrace();
         }
@@ -29,7 +34,7 @@ public class Game {
 
     }
 
-    public void setupDeck(Deck deck, String path) throws IOException {
+    private void setupDeck(Deck deck, String path) throws IOException {
 
         File file = new File(path);
 
@@ -42,6 +47,10 @@ public class Game {
         }
 
         bufferedReader.close();
+    }
+
+    public void start () {
+
     }
 
 }
