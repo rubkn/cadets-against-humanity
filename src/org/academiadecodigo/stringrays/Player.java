@@ -1,30 +1,27 @@
 package org.academiadecodigo.stringrays;
 
 
+import org.academiadecodigo.stringrays.cards.Card;
+import org.academiadecodigo.stringrays.cards.Deck;
+
 import java.util.ArrayList;
 
 public class Player {
 
     private String nickname;
+    private boolean isCzar;
+    private boolean isWaiting ;
+    private Deck hand;
 
-
-    private boolean isCzar = false;
-    private boolean isWaiting = false;
-
-    private ArrayList<Card> handDeck = new ArrayList<>();
-    private WhiteDeck whiteDeck;
-
-    public Player(String nickname){
-
-        this.nickname = nickname;
-
+    public Player() {
+        this.hand = new Deck();
     }
 
 
     public void draw(){
 
         //draw from the white deck and insert into player's hand
-        handDeck.add(whiteDeck.getCard());
+        hand.addCard(whiteDeck.getCard());
 
     }
 
@@ -33,7 +30,7 @@ public class Player {
         //choose the index one of the cards from the hand deck
         //return the card to the game choices
 
-        return handDeck.remove(index);
+        return hand.getCard(index);
     }
 
 
@@ -44,9 +41,6 @@ public class Player {
         return choose(index);
     }
 
-
-
-    //////////////////////////////////////////////////////////////////////////////////////////
     public boolean isCzar() {
         return isCzar;
     }
@@ -55,4 +49,11 @@ public class Player {
         isCzar = czar;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 }
