@@ -18,6 +18,9 @@ public class Server {
     private Vector<PlayerHandler> playerHandlers;
 
 
+    public Server() {
+        prompt = new Prompt(System.in, System.out);
+    }
     public void start() {
 
         ExecutorService fixedPool = Executors.newFixedThreadPool(Constants.MAX_NUMBER_OF_PLAYERS);
@@ -30,15 +33,24 @@ public class Server {
 
                 playerSocket = serverSocket.accept();
 
-                //TODO REMOVE AND USE GAME METHOD
-                Player player = new Player();
-                playerHandlers
-
-                fixedPool.execute(new PlayerHandler(this, playerSocket, new Player()));
+                //TODO REMOVE new Player() AND USE Game.Class METHOD
+                fixedPool.execute(new PlayerHandler(this, playerSocket, prompt, new Player()));
             }
         } catch (
                 IOException e) {
             e.getStackTrace();
         }
+    }
+
+    public synchronized void broadcast() {
+        for (PlayerHandler playerHandler : playerHandlers) {
+            if(!playerHandler.isCzar()) {
+
+            }
+        }
+    }
+
+    public void addPlayerHandler(PlayerHandler playerHandler) {
+        playerHandlers.add(playerHandler);
     }
 }
