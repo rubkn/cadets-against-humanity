@@ -1,15 +1,17 @@
 package org.academiadecodigo.stringrays.network;
 
-import org.academiadecodigo.stringrays.Player;
+import org.academiadecodigo.stringrays.game.Player;
 
 import java.net.Socket;
 
 public class PlayerHandler implements Runnable {
 
+    private Server server;
     private Socket playerSocket;
     private Player player;
 
-    public PlayerHandler (Socket playerSocket, Player player) {
+    public PlayerHandler(Server server, Socket playerSocket, Player player) {
+        this.server = server;
         this.playerSocket = playerSocket;
         this.player = player;
     }

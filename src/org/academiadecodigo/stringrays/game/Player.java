@@ -8,7 +8,6 @@ public class Player {
 
     private String nickname;
     private boolean isCzar;
-    private boolean isWaiting;
 
     private Deck hand;
 

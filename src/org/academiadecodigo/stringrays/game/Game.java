@@ -1,6 +1,5 @@
 package org.academiadecodigo.stringrays.game;
 
-import org.academiadecodigo.stringrays.Player;
 import org.academiadecodigo.stringrays.game.cards.Card;
 import org.academiadecodigo.stringrays.game.cards.Deck;
 
@@ -30,9 +29,6 @@ public class Game {
         } catch (IOException exc) {
             exc.printStackTrace();
         }
-
-        System.out.println(blackDeck.getCard(4).getMessage());
-
     }
 
     private void setupDeck(Deck deck, String path) throws IOException {
@@ -50,7 +46,7 @@ public class Game {
         bufferedReader.close();
     }
 
-    public void start () {
+    public void start() {
 
     }
 
