@@ -1,15 +1,10 @@
 package org.academiadecodigo.stringrays.network;
 
-import org.academiadecodigo.bootcamp.InputScanner;
 import org.academiadecodigo.bootcamp.Prompt;
 import org.academiadecodigo.bootcamp.scanners.integer.IntegerRangeInputScanner;
-import org.academiadecodigo.bootcamp.scanners.integer.IntegerSetInputScanner;
-import org.academiadecodigo.stringrays.game.Player;
+import org.academiadecodigo.stringrays.game.player.Player;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class PlayerHandler implements Runnable {
 

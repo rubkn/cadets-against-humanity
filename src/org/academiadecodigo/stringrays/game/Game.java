@@ -2,6 +2,7 @@ package org.academiadecodigo.stringrays.game;
 
 import org.academiadecodigo.stringrays.game.cards.Card;
 import org.academiadecodigo.stringrays.game.cards.Deck;
+import org.academiadecodigo.stringrays.game.player.Player;
 
 import java.io.BufferedReader;
 import java.io.File;

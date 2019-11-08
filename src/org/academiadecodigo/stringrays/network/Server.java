@@ -2,7 +2,7 @@ package org.academiadecodigo.stringrays.network;
 
 import org.academiadecodigo.bootcamp.Prompt;
 import org.academiadecodigo.stringrays.constants.Constants;
-import org.academiadecodigo.stringrays.game.Player;
+import org.academiadecodigo.stringrays.game.player.Player;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -18,7 +18,7 @@ public class Server {
     private Vector<PlayerHandler> playerHandlers;
 
 
-    public Server() {
+    public Server(int portNumber) {
         prompt = new Prompt(System.in, System.out);
     }
     public void start() {
