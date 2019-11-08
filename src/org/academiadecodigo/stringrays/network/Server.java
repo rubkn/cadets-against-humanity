@@ -1,7 +1,6 @@
 package org.academiadecodigo.stringrays.network;
 
-import org.academiadecodigo.stringrays.game.Game;
-
+import org.academiadecodigo.bootcamp.Prompt;
 
 import java.util.Vector;
 
