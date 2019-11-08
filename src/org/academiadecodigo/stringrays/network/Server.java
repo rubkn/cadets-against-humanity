@@ -1,6 +1,5 @@
 package org.academiadecodigo.stringrays.network;
 
-import org.academiadecodigo.bootcamp.Prompt;
 import org.academiadecodigo.stringrays.constants.Constants;
 import org.academiadecodigo.stringrays.game.Player;
 
@@ -13,7 +12,6 @@ import java.util.concurrent.Executors;
 
 public class Server {
 
-    private Prompt prompt;
     private Socket playerSocket;
     private Vector<PlayerHandler> playerHandlers;
 
@@ -32,7 +30,6 @@ public class Server {
 
                 //TODO REMOVE AND USE GAME METHOD
                 Player player = new Player();
-                playerHandlers
 
                 fixedPool.execute(new PlayerHandler(this, playerSocket, new Player()));
             }

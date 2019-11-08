@@ -1,5 +1,5 @@
 package org.academiadecodigo.stringrays.game;
-
+import org.academiadecodigo.stringrays.game.cards.populateDeck;
 import org.academiadecodigo.stringrays.constants.Constants;
 import org.academiadecodigo.stringrays.game.cards.Card;
 import org.academiadecodigo.stringrays.game.cards.Deck;
@@ -16,50 +16,35 @@ public class Game {
     private Deck whiteDeck;
     private Vector<Player> players;
 
-    public void init() {
+    public void init() throws IOException {
 
-        blackDeck = new Deck();
-        whiteDeck = new Deck();
+
+        blackDeck = populateDeck.fillDeck(Constants.blackDeck);
+        whiteDeck = populateDeck.fillDeck(Constants.whiteDeck);
         players = new Vector<>();
-
-        try {
-            setupDeck(blackDeck, "resources/black-cards.txt");
-            setupDeck(whiteDeck, "resources/white-cards.txt");
+        createPlayer();
+        players.get(randomFunction(0,players.size())).setCzar(true);
 
 
-        } catch (IOException exc) {
-            exc.printStackTrace();
-        }
+
     }
+    public void start() {
 
-    private void setupDeck(Deck deck, String path) throws IOException {
 
-        File file = new File(path);
-
-        BufferedReader bufferedReader;
-        bufferedReader = new BufferedReader((new FileReader(file)));
-
-        String cardMessage;
-        while ((cardMessage = bufferedReader.readLine()) != null) {
-            deck.addCard(new Card(cardMessage));
-        }
-
-        bufferedReader.close();
     }
 
     private void createPlayer() {
         Player newPlayer = new Player();
-
-        for (int i = 0; i < Constants.NUMBER_OF_CARDS_IN_PLAYER_HAND; i++) {
+        for (int i = 0; i < Constants.PLAYER_HAND_SIZE; i++) {
             giveCards(newPlayer);
         }
-
         players.add(new Player());
     }
 
     private void giveCards(Player player) {
-        player.draw(whiteDeck.getCard(1));
-        //TODO do randomizer for cards
+
+        player.draw(whiteDeck.getCard(randomFunction(0,whiteDeck.getSizeDeck())));
+
     }
 
     private void selectCzar() {
@@ -87,8 +72,11 @@ public class Game {
 
     }
 
-    public void start() {
 
+
+    public int randomFunction ( int min, int max  )
+    {
+        return (int) ((Math.random() * (max - min)) + min);
     }
 
 }
