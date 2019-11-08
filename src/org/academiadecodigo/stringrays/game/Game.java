@@ -1,5 +1,6 @@
 package org.academiadecodigo.stringrays.game;
 
+import org.academiadecodigo.stringrays.constants.Constants;
 import org.academiadecodigo.stringrays.game.cards.Card;
 import org.academiadecodigo.stringrays.game.cards.Deck;
 
@@ -44,6 +45,46 @@ public class Game {
         }
 
         bufferedReader.close();
+    }
+
+    private void createPlayer() {
+        Player newPlayer = new Player();
+
+        for (int i = 0; i < Constants.NUMBER_OF_CARDS_IN_PLAYER_HAND; i++) {
+            giveCards(newPlayer);
+        }
+
+        players.add(new Player());
+    }
+
+    private void giveCards(Player player) {
+        player.draw(whiteDeck.getCard(1));
+        //TODO do randomizer for cards
+    }
+
+    private void selectCzar() {
+
+        for (Player player : players) {
+
+            if (player.isCzar()) {
+
+                //verify and removes the actual czar
+                int lastCzar = players.indexOf(player);
+                player.setCzar(false);
+
+                //if czar is the last index of the vector, sets czar for the first index (0)
+                if (lastCzar == players.size()) {
+                    players.firstElement().setCzar(true);
+                    return;
+                }
+
+                //sets the next czar
+                players.get(lastCzar + 1).setCzar(true);
+                return;
+            }
+        }
+
+
     }
 
     public void start() {

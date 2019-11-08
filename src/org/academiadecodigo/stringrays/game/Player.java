@@ -16,27 +16,20 @@ public class Player {
     }
 
 
-    public void draw(){
+    public void draw(Card card) {
+        hand.addCard(card);
 
         //draw from the white deck and insert into player's hand
         //hand.addCard(whiteDeck.getCard());
 
     }
 
-    public Card choose(int index){
+    public Card choose(int index) {
 
         //choose the index one of the cards from the hand deck
         //return the card to the game choices
 
         return hand.getCard(index);
-    }
-
-
-    public Card play(int index){
-
-        draw();
-
-        return choose(index);
     }
 
     public boolean isCzar() {
@@ -54,4 +47,5 @@ public class Player {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
 }
