@@ -1,9 +1,7 @@
 package org.academiadecodigo.stringrays.network;
 
-import org.academiadecodigo.bootcamp.Prompt;
-import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
 import org.academiadecodigo.stringrays.constants.Constants;
-import org.academiadecodigo.stringrays.game.Player;
+import org.academiadecodigo.stringrays.game.player.Player;
 
 import java.io.IOException;
 import java.net.ServerSocket;
