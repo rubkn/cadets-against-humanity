@@ -1,12 +1,9 @@
 package org.academiadecodigo.stringrays.game;
-import org.academiadecodigo.stringrays.game.cards.populateDeck;
+import org.academiadecodigo.stringrays.game.cards.PopulateDeck;
 import org.academiadecodigo.stringrays.constants.Constants;
-import org.academiadecodigo.stringrays.game.cards.Card;
 import org.academiadecodigo.stringrays.game.cards.Deck;
+import org.academiadecodigo.stringrays.game.player.Player;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Vector;
 
@@ -19,8 +16,8 @@ public class Game {
     public void init() throws IOException {
 
 
-        blackDeck = populateDeck.fillDeck(Constants.blackDeck);
-        whiteDeck = populateDeck.fillDeck(Constants.whiteDeck);
+        blackDeck = PopulateDeck.fillDeck(Constants.blackDeck);
+        whiteDeck = PopulateDeck.fillDeck(Constants.whiteDeck);
         players = new Vector<>();
         createPlayer();
         players.get(randomFunction(0,players.size())).setCzar(true);

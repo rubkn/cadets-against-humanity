@@ -1,6 +1,8 @@
 package org.academiadecodigo.stringrays.network;
 
-import org.academiadecodigo.stringrays.game.Player;
+import org.academiadecodigo.bootcamp.Prompt;
+import org.academiadecodigo.bootcamp.scanners.integer.IntegerRangeInputScanner;
+import org.academiadecodigo.stringrays.game.player.Player;
 
 import java.net.Socket;
 
@@ -8,6 +10,7 @@ public class PlayerHandler implements Runnable {
 
     private Server server;
     private Socket playerSocket;
+    private Prompt prompt;
     private Player player;
 
     public PlayerHandler(Server server, Socket playerSocket, Player player) {
@@ -18,7 +21,19 @@ public class PlayerHandler implements Runnable {
 
     @Override
     public void run() {
+        server.addPlayerHandler(this);
+    }
 
+    public boolean isCzar() {
+        return player.isCzar();
+    }
+
+    private void connection() {
+
+        IntegerRangeInputScanner scanner = new IntegerRangeInputScanner(1, 10);
+        scanner.setMessage(Messages.VIEW_ACCOUNT_TRANSACTION_ACCOUNTID_MESSAGE);
+        scanner.setError(Messages.VIEW_ACCOUNT_TRANSACTION_INVALID_ACCOUNT_ERROR);
+        return prompt.getUserInput(scanner);
     }
 
 

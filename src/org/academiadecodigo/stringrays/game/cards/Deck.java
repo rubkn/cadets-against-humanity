@@ -1,7 +1,5 @@
 package org.academiadecodigo.stringrays.game.cards;
 
-import org.academiadecodigo.stringrays.game.cards.Card;
-
 import java.util.Vector;
 
 public class Deck {

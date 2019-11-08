@@ -1,7 +1,8 @@
 package org.academiadecodigo.stringrays.network;
 
+import org.academiadecodigo.bootcamp.Prompt;
 import org.academiadecodigo.stringrays.constants.Constants;
-import org.academiadecodigo.stringrays.game.Player;
+import org.academiadecodigo.stringrays.game.player.Player;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -29,7 +30,6 @@ public class Server {
                 playerSocket = serverSocket.accept();
 
                 //TODO REMOVE AND USE GAME METHOD
-                Player player = new Player();
 
                 fixedPool.execute(new PlayerHandler(this, playerSocket, new Player()));
             }
@@ -37,5 +37,17 @@ public class Server {
                 IOException e) {
             e.getStackTrace();
         }
+    }
+
+    public synchronized void broadcast() {
+        for (PlayerHandler playerHandler : playerHandlers) {
+            if(!playerHandler.isCzar()) {
+
+            }
+        }
+    }
+
+    public void addPlayerHandler(PlayerHandler playerHandler) {
+        playerHandlers.add(playerHandler);
     }
 }

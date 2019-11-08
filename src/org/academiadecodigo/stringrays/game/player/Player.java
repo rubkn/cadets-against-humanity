@@ -1,4 +1,4 @@
-package org.academiadecodigo.stringrays.game;
+package org.academiadecodigo.stringrays.game.player;
 
 
 import org.academiadecodigo.stringrays.game.cards.Card;
