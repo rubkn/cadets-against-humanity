@@ -21,7 +21,7 @@ public class Player {
     public void draw(){
 
         //draw from the white deck and insert into player's hand
-        hand.addCard(whiteDeck.getCard());
+        //hand.addCard(whiteDeck.getCard());
 
     }
 
