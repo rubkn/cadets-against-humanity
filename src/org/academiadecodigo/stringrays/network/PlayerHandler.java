@@ -1,15 +1,11 @@
 package org.academiadecodigo.stringrays.network;
 
-import org.academiadecodigo.bootcamp.InputScanner;
 import org.academiadecodigo.bootcamp.Prompt;
-import org.academiadecodigo.bootcamp.scanners.integer.IntegerRangeInputScanner;
-import org.academiadecodigo.bootcamp.scanners.integer.IntegerSetInputScanner;
+import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
 import org.academiadecodigo.stringrays.game.Player;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class PlayerHandler implements Runnable {
 
@@ -18,7 +14,7 @@ public class PlayerHandler implements Runnable {
     private Prompt prompt;
     private Player player;
 
-    public PlayerHandler(Server server, Socket playerSocket, Prompt prompt, Player player) {
+    public PlayerHandler(Server server, Socket playerSocket, Player player) {
         this.server = server;
         this.playerSocket = playerSocket;
         this.player = player;
@@ -26,72 +22,72 @@ public class PlayerHandler implements Runnable {
 
     @Override
     public void run() {
-        server.addPlayerHandler(this);
+        server.getPlayerHandlers().add(this);
+        init();
+        while (!Thread.currentThread().isInterrupted()) {
+            communicationServer();
+        }
     }
 
-    public boolean isCzar() {
-        return player.isCzar();
+    private void init() {
+        try {
+            prompt = new Prompt(playerSocket.getInputStream(), new PrintStream(playerSocket.getOutputStream(), true));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void communicationServer() {
+
+        BufferedReader in;
+        String message;
+
+        try {
+
+            in = new BufferedReader(new InputStreamReader(playerSocket.getInputStream()));
+
+            message = in.readLine();
+
+            if (message == null) {
+                server.getPlayerHandlers().remove(this);
+                close(playerSocket);
+                Thread.currentThread().interrupt();
+                return;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void connection() {
 
-        IntegerRangeInputScanner scanner = new IntegerRangeInputScanner(1, 10);
-        scanner.setMessage(Messages.VIEW_ACCOUNT_TRANSACTION_ACCOUNTID_MESSAGE);
-        scanner.setError(Messages.VIEW_ACCOUNT_TRANSACTION_INVALID_ACCOUNT_ERROR);
+    private int promptCards(int numberOfCards) {
+        MenuInputScanner scanner = new MenuInputScanner(player.getCardMessages());
+        scanner.setError("NOT A VALID CARD INDEX");
+        scanner.setMessage("\n CHOOSE A WHITE CARD TO PLAY: ");
         return prompt.getUserInput(scanner);
     }
 
+    public void sendMessageToPlayer(String message) {
 
+        PrintWriter out;
 
-    public void startMenu()
-    {
+        try {
+            out = new PrintWriter(playerSocket.getOutputStream(), true);
 
-    // BOAS VINDAS > ESCOLHER O NUMERO DE PLAYERS
+            out.println(message);
 
-
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void gameEngine()
-    {
-            setCardsToPlayer();
-            chooseCzar();
-
-            // definir um numero maximo de jogadas para se ganhar
-
+    private void close(Closeable closeable) {
+        if (closeable == null) {
+            return;
+        }
+        try {
+            closeable.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
-    public void setCardsToPlayer()
-    {
-        // atribuir as cartas a cada um dos players
-
-    }
-
-    public void chooseCzar()
-    {
-       // escolher um czar random
-    }
-
-    public void showBlackCardtoPlayer()
-    {
-        // mostrar a carta ao player
-    }
-
-    public void receiveCardsFromPlayersAndShow()
-    {
-        // receber as cartas dos jogadores e mostra-las
-
-    }
-
-    public void receiceChooseFromCzar()
-    {
-        // receber a escolher do czar
-    }
-
-
-
-
-
-
-
-
 }

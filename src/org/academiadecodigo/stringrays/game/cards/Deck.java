@@ -4,7 +4,7 @@ import java.util.Vector;
 
 public class Deck {
 
-    private Vector<Card> deck;
+    protected Vector<Card> deck;
 
     public Deck() {
         deck = new Vector<>();
@@ -17,8 +17,4 @@ public class Deck {
     public void addCard(Card card) {
         deck.add(card);
     }
-
-
-
-
 }

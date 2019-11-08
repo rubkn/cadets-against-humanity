@@ -1,6 +1,7 @@
 package org.academiadecodigo.stringrays.network;
 
 import org.academiadecodigo.bootcamp.Prompt;
+import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
 import org.academiadecodigo.stringrays.constants.Constants;
 import org.academiadecodigo.stringrays.game.Player;
 
@@ -13,14 +14,14 @@ import java.util.concurrent.Executors;
 
 public class Server {
 
-    private Prompt prompt;
     private Socket playerSocket;
     private Vector<PlayerHandler> playerHandlers;
 
 
     public Server() {
-        prompt = new Prompt(System.in, System.out);
+        playerHandlers = new Vector<>();
     }
+
     public void start() {
 
         ExecutorService fixedPool = Executors.newFixedThreadPool(Constants.MAX_NUMBER_OF_PLAYERS);
@@ -34,7 +35,7 @@ public class Server {
                 playerSocket = serverSocket.accept();
 
                 //TODO REMOVE new Player() AND USE Game.Class METHOD
-                fixedPool.execute(new PlayerHandler(this, playerSocket, prompt, new Player()));
+                fixedPool.execute(new PlayerHandler(this, playerSocket, new Player()));
             }
         } catch (
                 IOException e) {
@@ -44,13 +45,12 @@ public class Server {
 
     public synchronized void broadcast() {
         for (PlayerHandler playerHandler : playerHandlers) {
-            if(!playerHandler.isCzar()) {
-
-            }
+            playerHandler.
         }
     }
 
-    public void addPlayerHandler(PlayerHandler playerHandler) {
-        playerHandlers.add(playerHandler);
+
+    protected Vector getPlayerHandlers() {
+        return playerHandlers;
     }
 }

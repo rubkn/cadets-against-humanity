@@ -3,18 +3,18 @@ package org.academiadecodigo.stringrays.game;
 
 import org.academiadecodigo.stringrays.game.cards.Card;
 import org.academiadecodigo.stringrays.game.cards.Deck;
+import org.academiadecodigo.stringrays.game.cards.PlayerHand;
 
 public class Player {
 
     private String nickname;
     private boolean isCzar;
-
-    private Deck hand;
+    private int score = 0;
+    private PlayerHand hand;
 
     public Player() {
-        this.hand = new Deck();
+        this.hand = new PlayerHand();
     }
-
 
     public void draw(){
 
@@ -53,5 +53,9 @@ public class Player {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public String[] getCardMessages() {
+        return hand.getCardMessages();
     }
 }
