@@ -43,9 +43,9 @@ public class Server {
         }
     }
 
-    public synchronized void broadcast() {
+    public synchronized void broadcast(String message) {
         for (PlayerHandler playerHandler : playerHandlers) {
-            playerHandler.
+            playerHandler.sendMessageToPlayer(message);
         }
     }
 
