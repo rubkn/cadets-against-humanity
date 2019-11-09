@@ -1,6 +1,6 @@
 package org.academiadecodigo.stringrays.game.cards;
 
-public class PlayerHand extends Deck {
+public class Hand extends Deck {
 
     public String[] getCardMessages() {
         String[] cardMessages = new String[deck.size()];

@@ -9,7 +9,6 @@ import org.academiadecodigo.stringrays.game.player.Player;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.NoSuchElementException;
 
 public class PlayerHandler implements Runnable {
 
@@ -30,8 +29,9 @@ public class PlayerHandler implements Runnable {
         System.out.println(server.getPlayerHandlers().size()); //TODO CHECK PLAYERHANDLER SIZE
         init();
         chooseNickname();
+        askIfReady();
         while (!Thread.currentThread().isInterrupted()) {
-            communicationServer();
+            waitingForInstructions();
         }
     }
 
@@ -49,6 +49,10 @@ public class PlayerHandler implements Runnable {
         }
     }
 
+    private void waitingForInstructions() {
+
+    }
+
     private void chooseNickname() { //TODO CHECK IF THE NICKNAME IS REPEATED
         out.println(Messages.LOGIN_WELCOME);
         StringInputScanner scanner = new StringInputScanner();
@@ -56,58 +60,44 @@ public class PlayerHandler implements Runnable {
         player.setNickname(prompt.getUserInput(scanner));
     }
 
+    public void askIfReady() {
+
+        String[] options = {"YES"};
+
+        MenuInputScanner scanner = new MenuInputScanner(options);
+
+        scanner.setMessage(Messages.MAIN_MENU_READY);
+
+        scanner.setError("GET READY, MOTHERFUCKER!");
+
+        prompt.getUserInput(scanner);
+
+        player.setReady(true);
+    }
+
     public int chooseCard(String blackCard, String[] whiteCards, String message) {
         MenuInputScanner scanner = new MenuInputScanner(whiteCards);
         scanner.setMessage("Black Card: " + blackCard + "\n\n" + message);
         scanner.setError(Messages.INVALID_OPTION);
-        return  prompt.getUserInput(scanner);
+        return prompt.getUserInput(scanner);
     }
 
-    private void communicationServer() {
+    public void sendMessageToPlayer(String message) {
+        out.println(message);
+    }
 
-        int message;
-
+    private void close(Closeable closeable) {
+        if (closeable == null) {
+            return;
+        }
         try {
-            MenuInputScanner scanner = new MenuInputScanner(player.getCardMessages());
-            scanner.setMessage("CHOOSE A CARD");
-            message = prompt.getUserInput(scanner);
-
-            System.out.println(message);
-
-        } catch (NoSuchElementException e) {
+            closeable.close();
+        } catch (IOException e) {
             e.printStackTrace();
-        } /*finally {
-                server.getPlayerHandlers().remove(this);
-                System.out.println("SAI DA LISTA");
-                System.out.println(server.getPlayerHandlers().size());
-                close(playerSocket);
-                Thread.currentThread().interrupt();
-            }*/
-        }
-
-
-        public void sendMessageToPlayer (String message){
-
-            PrintWriter out;
-
-            try {
-                out = new PrintWriter(playerSocket.getOutputStream(), true);
-
-                out.println(message);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        private void close (Closeable closeable){
-            if (closeable == null) {
-                return;
-            }
-            try {
-                closeable.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
+
+    public Player getPlayer() {
+        return player;
+    }
+}
