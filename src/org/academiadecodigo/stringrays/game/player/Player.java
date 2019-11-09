@@ -69,4 +69,7 @@ public class Player {
         return hand.getCardMessages();
     }
 
+    public void setPlayerHandler(PlayerHandler playerHandler) {
+        this.playerHandler = playerHandler;
+    }
 }

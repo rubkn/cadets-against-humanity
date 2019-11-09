@@ -24,8 +24,7 @@ public class PlayerHandler implements Runnable {
 
     @Override
     public void run() {
-        server.getPlayerHandlers().add(this);
-        System.out.println(server.getPlayerHandlers().size());
+        System.out.println(server.getPlayerHandlers().size()); //TODO CHECK PLAYERHANDLER SIZE
         init();
         while (!Thread.currentThread().isInterrupted()) {
             communicationServer();
@@ -33,6 +32,11 @@ public class PlayerHandler implements Runnable {
     }
 
     private void init() {
+
+        server.getPlayerHandlers().add(this);
+
+        player.setPlayerHandler(this);
+
         try {
             prompt = new Prompt(playerSocket.getInputStream(), new PrintStream(playerSocket.getOutputStream(), true));
         } catch (IOException e) {
