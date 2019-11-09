@@ -14,6 +14,7 @@ public class Game {
     private Deck whiteDeck;
     private Deck playedCards;
     private Vector<Player> players;
+    private Player czar;
 
     public void init() throws IOException {
 
@@ -21,8 +22,6 @@ public class Game {
         whiteDeck = PopulateDeck.fillDeck(Constants.whiteDeck);
 
         players = new Vector<>();
-        createPlayer();
-        players.get(randomFunction(0, players.size())).setCzar(true);
 
     }
 
@@ -59,18 +58,21 @@ public class Game {
 
                 //if czar is the last index of the vector, sets czar for the first index (0)
                 if (lastCzar == players.size()) {
-                    players.firstElement().setCzar(true);
+                    czar = players.firstElement();
+                    czar.setCzar(true);
                     return;
                 }
 
                 //sets the next czar
-                players.get(lastCzar + 1).setCzar(true);
+                czar = players.get(lastCzar + 1);
+                czar.setCzar(true);
                 return;
             }
         }
 
 
     }
+
 
     private void newRound() {
         for (Player player : players) {
@@ -88,12 +90,7 @@ public class Game {
     }
 
     private void chooseWinner(int index) {
-        for (Player player : players) {
-
-            if (player.isCzar()) {
-                player.chooseWinCard(index, playedCards);
-            }
-        }
+        czar.chooseWinCard(index, playedCards);
     }
 
 
