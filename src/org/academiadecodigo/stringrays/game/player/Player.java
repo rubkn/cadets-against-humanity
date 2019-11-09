@@ -1,5 +1,7 @@
 package org.academiadecodigo.stringrays.game.player;
 
+import org.academiadecodigo.stringrays.constants.Constants;
+import org.academiadecodigo.stringrays.constants.Messages;
 import org.academiadecodigo.stringrays.game.cards.Card;
 import org.academiadecodigo.stringrays.game.cards.Deck;
 import org.academiadecodigo.stringrays.game.cards.Hand;
@@ -31,13 +33,13 @@ public class Player {
     }
 
     public Card chooseWhiteCard(Card blackCard) {
-        int index = 1; //playerHandler.chooseCard(blackCard.getMessage(), getCardMessages(), Messages.PLAYER_TURN_MESSAGE);
-        return getCard(index - 1);
+        int cardIndex = playerHandler.chooseCard(blackCard.getMessage(), getCardMessages(), Messages.PLAYER_TURN_MESSAGE);
+        return getCard(cardIndex - Constants.CONVERT_PROMPT_VIEW_INDEX);
     }
 
     public Card chooseWinner(Card blackCard, Hand czarHand) {
         int index = 1; //playerHandler.chooseCard(blackCard.getMessage(), getCardMessages(), Messages.PLAYER_TURN_MESSAGE);
-        Card czarChosenCard = czarHand.getCard(index - 1);
+        Card czarChosenCard = czarHand.getCard(index - Constants.CONVERT_PROMPT_VIEW_INDEX);
         System.out.println("Black Card: " + blackCard.getMessage());
         System.out.println("Czar " + getNickname() + " chose: " + czarChosenCard.getMessage());
         return czarChosenCard;
@@ -66,10 +68,6 @@ public class Player {
     public void waitForOthers(String message) {
         System.out.println(message);
         //playerHandler.sendMessageToPlayer(message);
-    }
-
-    public void setAlreadyPlayed(boolean alreadyPlayed) {
-        this.alreadyPlayed = alreadyPlayed;
     }
 
     public String getNickname() {

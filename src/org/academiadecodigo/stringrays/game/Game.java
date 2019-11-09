@@ -166,9 +166,9 @@ public class Game {
         boolean isWinner = false;
 
         for (Player player : players) {
-            if (player.getScore() == Constants.ROUNDS_OR_SCORES_OR_O_CARAIO_TO_WIN) {
+            if (player.getScore() == Constants.SCORE_TO_WIN) {
                 isWinner = true;
-                System.out.println("\n" + player.getNickname() + ": Maltinha, I won!");
+                System.out.println("\n" + player.getNickname() + ": Maltinha, before being the adult in the room... I won!");
             }
         }
 

@@ -26,8 +26,8 @@ public class PlayerHandler implements Runnable {
 
     @Override
     public void run() {
-        System.out.println(server.getPlayerHandlers().size()); //TODO CHECK PLAYERHANDLER SIZE
         init();
+        System.out.println(server.getPlayerHandlers().size()); //TODO CHECK PLAYERHANDLER SIZE
         chooseNickname();
         askIfReady();
         while (!Thread.currentThread().isInterrupted()) {
@@ -68,11 +68,13 @@ public class PlayerHandler implements Runnable {
 
         scanner.setMessage(Messages.MAIN_MENU_READY);
 
-        scanner.setError("GET READY, MOTHERFUCKER!");
+        scanner.setError("Tell me when you're ready...");
 
         prompt.getUserInput(scanner);
 
         player.setReady(true);
+
+        server.gameReady();
     }
 
     public int chooseCard(String blackCard, String[] whiteCards, String message) {

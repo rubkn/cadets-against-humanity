@@ -18,6 +18,7 @@ public class Server {
     private Socket playerSocket;
     private Vector<PlayerHandler> playerHandlers;
     private Game game;
+    private int numberOfReadyPlayers = 0;
 
 
     public Server() {
@@ -46,27 +47,17 @@ public class Server {
 
                 fixedPool.execute(new PlayerHandler(this, playerSocket, newPlayer));
 
-                //game.notifyReady(newPlayer);
+                System.out.println("New player connected...");
             }
         } catch (IOException e) {
             e.getStackTrace();
         }
     }
 
-    public void startNewRound(Card blackCard) {
-
-        for (PlayerHandler playerHandler : playerHandlers) {
-
-            if (!playerHandler.getPlayer().isCzar()) {
-                //game.roundWhiteCards().put(playerHandler.getPlayer().chooseWhiteCard(blackCard), playerHandler.getPlayer());
-                playerHandler.getPlayer().waitForOthers(Messages.PLAYER_TURN_WAIT);
-                continue;
-            }
-
-            if (playerHandler.getPlayer().isCzar()) {
-                //game.setCzar(playerHandler.getPlayer());
-                playerHandler.getPlayer().waitForOthers(Messages.CZAR_TURN_MESSAGE);
-            }
+    public void gameReady() {
+        numberOfReadyPlayers++;
+        if(numberOfReadyPlayers == 2){
+            game.start();
         }
     }
 
