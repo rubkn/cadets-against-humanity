@@ -1,22 +1,26 @@
 package org.academiadecodigo.stringrays.game;
 
 import org.academiadecodigo.stringrays.constants.Messages;
+import org.academiadecodigo.stringrays.game.cards.Card;
 import org.academiadecodigo.stringrays.game.cards.PopulateDeck;
 import org.academiadecodigo.stringrays.constants.Constants;
 import org.academiadecodigo.stringrays.game.cards.Deck;
 import org.academiadecodigo.stringrays.game.player.Player;
 import org.academiadecodigo.stringrays.network.Server;
 
+import java.util.HashMap;
 import java.util.Vector;
 
 public class Game {
 
     private Deck blackDeck;
     private Deck whiteDeck;
-    private Deck playedCards;
+    private HashMap<Card, Player> playedCards;
+    private Card blackCard;
     private Vector<Player> players;
     private Player czar;
     private Server server;
+    private boolean playerWon;
 
     public Game() {
         init();
@@ -31,11 +35,48 @@ public class Game {
     public void waitingForPlayers() {
 
         if (players.size() >= Constants.MIN_NUMBER_OF_PLAYERS) {
-                start();
+
+            /*
+            try {
+                wait();
+                notifyAll();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+            */
+
+            start();
+        }
+    }
+
+
+    public synchronized void notifyReady(Player player) {
+
+        player.setReady(true);
+
+        try {
+            for (Player playerFromList : players) {
+                if (!playerFromList.isReady()) {
+                    wait();
+                }
+            }
+            notifyAll();
+            waitingForPlayers();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void start() {
+
+        while (!playerWon) {
+
+            newRound();
+        }
+    }
+
+    private Card getBlackCard() {
+        return blackDeck.getCard(randomFunction(0, blackDeck.getSizeDeck()));
     }
 
     public Player createPlayer() {
@@ -56,6 +97,7 @@ public class Game {
     private void giveCards(Player player) {
         player.draw(whiteDeck.getCard(randomFunction(0, whiteDeck.getSizeDeck())));
     }
+
 
     private void setNextCzar() {
         for (Player player : players) {
@@ -83,24 +125,26 @@ public class Game {
 
     }
 
-
-    private void newRound() {
-        for (Player player : players) {
-
-            if (player.isCzar() || player.alreadyPlayed()) {
-                continue;
-            }
-
-            playedCards.addCard(player.choose(0)); //Need to review this one
-            player.setAlreadyPlayed(true);
-        }
-
-        //after all players, already played
-        chooseWinner(0); //Need to review this one too
+    public HashMap<Card, Player> getPlayedCards() {
+        return playedCards;
     }
 
+    private void newRound() {
+
+        blackCard = getBlackCard();
+
+        server.startNewRound(blackCard);
+
+        czar.chooseWhiteCard(blackCard);
+
+        setNextCzar();
+    }
+
+    //after all players, already played
+    //chooseWinner(0); //Need to review this one too
+
     private void chooseWinner(int index) {
-        czar.chooseWinCard(index, playedCards);
+        //czar.chooseWinCard(index, playedCards);
     }
 
 
@@ -110,5 +154,9 @@ public class Game {
 
     public void setServer(Server server) {
         this.server = server;
+    }
+
+    public void setCzar(Player czar) {
+        this.czar = czar;
     }
 }

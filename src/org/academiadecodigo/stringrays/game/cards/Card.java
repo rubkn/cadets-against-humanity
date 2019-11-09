@@ -4,7 +4,7 @@ public class Card {
 
     private String message;
 
-    public  Card(String message) {
+    public Card(String message) {
         this.message = message;
     }
 
