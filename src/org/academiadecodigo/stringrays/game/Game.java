@@ -6,7 +6,6 @@ import org.academiadecodigo.stringrays.game.cards.PopulateDeck;
 import org.academiadecodigo.stringrays.constants.Constants;
 import org.academiadecodigo.stringrays.game.cards.Deck;
 import org.academiadecodigo.stringrays.game.player.Player;
-import org.academiadecodigo.stringrays.network.PlayerHandler;
 import org.academiadecodigo.stringrays.network.Server;
 
 import java.util.HashMap;
@@ -21,7 +20,6 @@ public class Game {
     private Vector<Player> players;
     private Player czar;
     private Server server;
-    private boolean playerWon;
 
     public Game() {
         init();
@@ -31,6 +29,7 @@ public class Game {
         blackDeck = PopulateDeck.fillDeck(Constants.blackDeck);
         whiteDeck = PopulateDeck.fillDeck(Constants.whiteDeck);
         players = new Vector<>();
+        playedCards = new HashMap<>();
     }
 
     public void waitingForPlayers() {
@@ -62,10 +61,21 @@ public class Game {
 
         checkPlayersAreReady();
 
-        while (!playerWon) {
+        players.get(0).setCzar(true);
 
+        while (!playerWon()) {
             newRound();
         }
+    }
+
+    private boolean playerWon() {
+        boolean isWinner = false;
+        for (Player player : players) {
+            if (player.getScore() == Constants.ROUNDS_OR_SCORES_OR_O_CARAIO_TO_WIN) {
+                isWinner = true;
+            }
+        }
+        return isWinner;
     }
 
     private Card getBlackCard() {
@@ -93,6 +103,7 @@ public class Game {
 
 
     private void setNextCzar() {
+
         for (Player player : players) {
 
             if (player.isCzar()) {
@@ -102,7 +113,7 @@ public class Game {
                 player.setCzar(false);
 
                 //if czar is the last index of the vector, sets czar for the first index (0)
-                if (lastCzar == players.size()) {
+                if (lastCzar == players.size() - 1) {
                     czar = players.firstElement();
                     czar.setCzar(true);
                     return;
@@ -118,7 +129,7 @@ public class Game {
 
     }
 
-    public HashMap<Card, Player> getPlayedCards() {
+    public HashMap<Card, Player> roundWhiteCards() {
         return playedCards;
     }
 
@@ -128,9 +139,13 @@ public class Game {
 
         startNewRound(blackCard);
 
-        czar.chooseWhiteCard(blackCard);
+        checkRoundWinner(czar.chooseWhiteCard(blackCard));
 
         setNextCzar();
+    }
+
+    private void checkRoundWinner(Card whiteCard) {
+        playedCards.get(whiteCard).roundWon();
     }
 
     private void startNewRound(Card blackCard) {
@@ -138,7 +153,7 @@ public class Game {
         for (Player player : players) {
 
             if (!player.isCzar()) {
-                getPlayedCards().put(player.chooseWhiteCard(blackCard), player);
+                roundWhiteCards().put(player.chooseWhiteCard(blackCard), player);
                 player.waitForOthers(Messages.PLAYER_TURN_WAIT);
                 continue;
             }

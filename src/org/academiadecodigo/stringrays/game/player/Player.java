@@ -33,6 +33,10 @@ public class Player {
         return getCard(index - 1);
     }
 
+    public void roundWon() {
+        score++;
+    }
+
     public Card getCard(int index) {
         return hand.getCard(index);
     }
@@ -54,7 +58,8 @@ public class Player {
     }
 
     public void waitForOthers(String message) {
-        playerHandler.sendMessageToPlayer(message);
+        System.out.println("WAIT FOR OTHERS");
+        //playerHandler.sendMessageToPlayer(message);
     }
 
     public void setAlreadyPlayed(boolean alreadyPlayed) {
@@ -86,5 +91,9 @@ public class Player {
     public void setReady(boolean ready) {
         System.out.println(getNickname() + " is ready!");
         this.ready = ready;
+    }
+
+    public int getScore() {
+        return score;
     }
 }
