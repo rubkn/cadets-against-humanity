@@ -1,11 +1,12 @@
 package org.academiadecodigo.stringrays.game;
 
+import org.academiadecodigo.stringrays.constants.Messages;
 import org.academiadecodigo.stringrays.game.cards.PopulateDeck;
 import org.academiadecodigo.stringrays.constants.Constants;
 import org.academiadecodigo.stringrays.game.cards.Deck;
 import org.academiadecodigo.stringrays.game.player.Player;
+import org.academiadecodigo.stringrays.network.Server;
 
-import java.io.IOException;
 import java.util.Vector;
 
 public class Game {
@@ -15,25 +16,33 @@ public class Game {
     private Deck playedCards;
     private Vector<Player> players;
     private Player czar;
+    private Server server;
 
-    public void init() {
-
-        blackDeck = PopulateDeck.fillDeck(Constants.blackDeck);
-        whiteDeck = PopulateDeck.fillDeck(Constants.whiteDeck);
-
-        players = new Vector<>();
-
+    public Game() {
+        init();
     }
 
-    public void start() {
+    public void init() {
+        blackDeck = PopulateDeck.fillDeck(Constants.blackDeck);
+        whiteDeck = PopulateDeck.fillDeck(Constants.whiteDeck);
+        players = new Vector<>();
+    }
 
+    public void waitingForPlayers() {
+
+        if (players.size() >= Constants.MIN_NUMBER_OF_PLAYERS) {
+                start();
+            }
+    }
+
+    private void start() {
     }
 
     public Player createPlayer() {
         //instance of new player
         Player newPlayer = new Player();
 
-        //gives ten cards, to the new player
+        //gives cards, to the new player
         for (int i = 0; i < Constants.PLAYER_HAND_SIZE; i++) {
             giveCards(newPlayer);
         }
@@ -99,4 +108,7 @@ public class Game {
         return (int) ((Math.random() * (max - min)) + min);
     }
 
+    public void setServer(Server server) {
+        this.server = server;
+    }
 }

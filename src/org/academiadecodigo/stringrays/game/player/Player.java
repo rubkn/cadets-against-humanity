@@ -1,12 +1,9 @@
 package org.academiadecodigo.stringrays.game.player;
 
-
 import org.academiadecodigo.stringrays.game.cards.Card;
 import org.academiadecodigo.stringrays.game.cards.Deck;
 import org.academiadecodigo.stringrays.game.cards.PlayerHand;
 import org.academiadecodigo.stringrays.network.PlayerHandler;
-
-import java.util.Vector;
 
 public class Player {
 
@@ -31,9 +28,6 @@ public class Player {
 
     public Card choose(int index) {
 
-        //choose the index one of the cards from the hand deck
-        //return the card to the game choices
-
         return hand.getCard(index);
     }
 
@@ -52,6 +46,7 @@ public class Player {
     public boolean alreadyPlayed() {
         return alreadyPlayed;
     }
+
 
     public void setAlreadyPlayed(boolean alreadyPlayed) {
         this.alreadyPlayed = alreadyPlayed;

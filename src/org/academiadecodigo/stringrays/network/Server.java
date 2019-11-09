@@ -24,11 +24,10 @@ public class Server {
 
     private void init() {
         game = new Game();
-        game.init();
+        game.setServer(this);
     }
 
     public void start() {
-
 
         ExecutorService fixedPool = Executors.newFixedThreadPool(Constants.MAX_NUMBER_OF_PLAYERS);
 
@@ -40,11 +39,11 @@ public class Server {
 
                 playerSocket = serverSocket.accept();
 
-                //TODO REMOVE new Player() AND USE Game.Class METHOD
                 fixedPool.execute(new PlayerHandler(this, playerSocket, game.createPlayer()));
+
+                game.waitingForPlayers();
             }
-        } catch (
-                IOException e) {
+        } catch (IOException e) {
             e.getStackTrace();
         }
     }
@@ -54,7 +53,6 @@ public class Server {
             playerHandler.sendMessageToPlayer(message);
         }
     }
-
 
     protected Vector getPlayerHandlers() {
         return playerHandlers;

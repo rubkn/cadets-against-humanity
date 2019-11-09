@@ -1,6 +1,5 @@
 package org.academiadecodigo.stringrays;
 
-import org.academiadecodigo.stringrays.constants.Constants;
 import org.academiadecodigo.stringrays.network.Server;
 
 public class Main {
