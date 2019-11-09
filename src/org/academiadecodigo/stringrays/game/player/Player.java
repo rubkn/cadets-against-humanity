@@ -29,7 +29,7 @@ public class Player {
     }
 
     public Card chooseWhiteCard(Card blackCard) {
-        int index = playerHandler.chooseCard(blackCard.getMessage(), getCardMessages(), Messages.PLAYER_TURN_MESSAGE);
+        int index = 1; //playerHandler.chooseCard(blackCard.getMessage(), getCardMessages(), Messages.PLAYER_TURN_MESSAGE);
         return getCard(index - 1);
     }
 
@@ -84,6 +84,7 @@ public class Player {
     }
 
     public void setReady(boolean ready) {
+        System.out.println(getNickname() + " is ready!");
         this.ready = ready;
     }
 }

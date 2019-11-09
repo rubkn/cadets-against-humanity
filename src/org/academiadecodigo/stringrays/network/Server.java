@@ -46,14 +46,14 @@ public class Server {
 
                 fixedPool.execute(new PlayerHandler(this, playerSocket, newPlayer));
 
-                game.notifyReady(newPlayer);
+                //game.notifyReady(newPlayer);
             }
         } catch (IOException e) {
             e.getStackTrace();
         }
     }
 
-    public synchronized void startNewRound(Card blackCard) {
+    public void startNewRound(Card blackCard) {
 
         for (PlayerHandler playerHandler : playerHandlers) {
 

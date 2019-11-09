@@ -6,6 +6,7 @@ import org.academiadecodigo.stringrays.game.cards.PopulateDeck;
 import org.academiadecodigo.stringrays.constants.Constants;
 import org.academiadecodigo.stringrays.game.cards.Deck;
 import org.academiadecodigo.stringrays.game.player.Player;
+import org.academiadecodigo.stringrays.network.PlayerHandler;
 import org.academiadecodigo.stringrays.network.Server;
 
 import java.util.HashMap;
@@ -34,40 +35,32 @@ public class Game {
 
     public void waitingForPlayers() {
 
-        if (players.size() >= Constants.MIN_NUMBER_OF_PLAYERS) {
+        System.out.println("WAITING FOR PLAYERS...");
 
-            /*
-            try {
-                wait();
-                notifyAll();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            */
-
-            start();
-        }
     }
 
 
-    public synchronized void notifyReady(Player player) {
+    public void checkPlayersAreReady() {
 
-        player.setReady(true);
+        boolean ready = true;
 
-        try {
-            for (Player playerFromList : players) {
-                if (!playerFromList.isReady()) {
-                    wait();
-                }
+        for (Player playerFromList : players) {
+            if (!playerFromList.isReady()) {
+                ready = false;
             }
-            notifyAll();
-            waitingForPlayers();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
+
+        if (!ready) {
+            checkPlayersAreReady();
+            return;
+        }
+
+        return;
     }
 
-    private void start() {
+    public void start() {
+
+        checkPlayersAreReady();
 
         while (!playerWon) {
 
@@ -133,13 +126,29 @@ public class Game {
 
         blackCard = getBlackCard();
 
-        server.startNewRound(blackCard);
+        startNewRound(blackCard);
 
         czar.chooseWhiteCard(blackCard);
 
         setNextCzar();
     }
 
+    private void startNewRound(Card blackCard) {
+
+        for (Player player : players) {
+
+            if (!player.isCzar()) {
+                getPlayedCards().put(player.chooseWhiteCard(blackCard), player);
+                player.waitForOthers(Messages.PLAYER_TURN_WAIT);
+                continue;
+            }
+
+            if (player.isCzar()) {
+                setCzar(player);
+                player.waitForOthers(Messages.CZAR_TURN_MESSAGE);
+            }
+        }
+    }
     //after all players, already played
     //chooseWinner(0); //Need to review this one too
 
