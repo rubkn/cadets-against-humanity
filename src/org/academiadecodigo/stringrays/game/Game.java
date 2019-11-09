@@ -1,6 +1,7 @@
 package org.academiadecodigo.stringrays.game;
 
 import org.academiadecodigo.stringrays.constants.Messages;
+import org.academiadecodigo.stringrays.constants.Random;
 import org.academiadecodigo.stringrays.game.cards.Card;
 import org.academiadecodigo.stringrays.game.cards.Hand;
 import org.academiadecodigo.stringrays.game.cards.PopulateDeck;
@@ -8,7 +9,6 @@ import org.academiadecodigo.stringrays.constants.Constants;
 import org.academiadecodigo.stringrays.game.cards.Deck;
 import org.academiadecodigo.stringrays.game.player.Player;
 import org.academiadecodigo.stringrays.network.Server;
-
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -18,7 +18,6 @@ public class Game {
     private Deck whiteDeck;
     private HashMap<Card, Player> playedCards;
     private Hand czarHand;
-    private Card blackCard;
     private Vector<Player> players;
     private Player czar;
     private Server server;
@@ -33,13 +32,7 @@ public class Game {
         players = new Vector<>();
     }
 
-    public void waitingForPlayers() {
-
-        System.out.println("WAITING FOR PLAYERS...");
-
-    }
-
-
+    /*
     public void checkPlayersAreReady() {
 
         boolean ready = true;
@@ -57,10 +50,11 @@ public class Game {
 
         return;
     }
+    */
 
     public void start() {
 
-        checkPlayersAreReady();
+        //checkPlayersAreReady();
 
         players.get(0).setCzar(true);
 
@@ -68,24 +62,7 @@ public class Game {
             System.out.println("\nStarting new round");
             newRound();
         }
-
     }
-
-    private boolean playerWon() {
-        boolean isWinner = false;
-        for (Player player : players) {
-            if (player.getScore() == Constants.ROUNDS_OR_SCORES_OR_O_CARAIO_TO_WIN) {
-                isWinner = true;
-                System.out.println("\n" + player.getNickname() + ": Maltinha, I won!");
-            }
-        }
-        return isWinner;
-    }
-
-    private Card getBlackCard() {
-        return blackDeck.getCard(randomFunction(0, blackDeck.getSizeDeck()));
-    }
-
 
     public Player createPlayer() {
         //instance of new player
@@ -102,10 +79,51 @@ public class Game {
         return newPlayer;
     }
 
+    private void newRound() {
+
+        Card blackCard = getBlackCard();
+        playedCards = new HashMap<>();
+        czarHand = new Hand();
+
+        System.out.println("Black Card: " + blackCard.getMessage());
+
+        startNewRound(blackCard);
+
+        checkRoundWinner(czar.chooseWinner(blackCard, czarHand));
+
+        playersDrawWhiteCards();
+
+        setNextCzar();
+    }
+
+    private void startNewRound(Card blackCard) {
+
+        for (Player player : players) {
+
+            if (!player.isCzar()) {
+                Card whiteCardPlayed = player.chooseWhiteCard(blackCard);
+                System.out.println(player.getNickname() + " White Card: " + whiteCardPlayed.getMessage());
+                czarHand.addCard(whiteCardPlayed);
+                playedCards.put(whiteCardPlayed, player);
+                player.waitForOthers(Messages.PLAYER_TURN_WAIT);
+                continue;
+            }
+
+            if (player.isCzar()) {
+                czar = player;
+                player.waitForOthers(Messages.CZAR_TURN_MESSAGE);
+            }
+        }
+    }
+
     private void drawWhiteCard(Player player) {
         if (!player.isCzar()) {
-            player.draw(whiteDeck.getCard(randomFunction(0, whiteDeck.getSizeDeck())));
+            player.draw(whiteDeck.getCard(Random.getRandomNumber(0, whiteDeck.getSizeDeck())));
         }
+    }
+
+    private Card getBlackCard() {
+        return blackDeck.getCard(Random.getRandomNumber(0, blackDeck.getSizeDeck()));
     }
 
     private void setNextCzar() {
@@ -131,8 +149,6 @@ public class Game {
                 return;
             }
         }
-
-
     }
 
     private void playersDrawWhiteCards() {
@@ -141,63 +157,25 @@ public class Game {
         }
     }
 
-    private void newRound() {
-
-        blackCard = getBlackCard();
-        playedCards = new HashMap<>();
-        czarHand = new Hand();
-
-        System.out.println("Black Card: " + blackCard.getMessage());
-
-        startNewRound(blackCard);
-
-        checkRoundWinner(czar.chooseWinner(blackCard, czarHand));
-
-        playersDrawWhiteCards();
-
-        setNextCzar();
-    }
-
     private void checkRoundWinner(Card whiteCard) {
         playedCards.get(whiteCard).roundWon();
     }
 
-    private void startNewRound(Card blackCard) {
+    private boolean playerWon() {
+
+        boolean isWinner = false;
 
         for (Player player : players) {
-
-            if (!player.isCzar()) {
-                Card whiteCardPlayed = player.chooseWhiteCard(blackCard);
-                System.out.println(player.getNickname() + " White Card: " + whiteCardPlayed.getMessage());
-                czarHand.addCard(whiteCardPlayed);
-                playedCards.put(whiteCardPlayed, player);
-                player.waitForOthers(Messages.PLAYER_TURN_WAIT);
-                continue;
-            }
-
-            if (player.isCzar()) {
-                setCzar(player);
-                player.waitForOthers(Messages.CZAR_TURN_MESSAGE);
+            if (player.getScore() == Constants.ROUNDS_OR_SCORES_OR_O_CARAIO_TO_WIN) {
+                isWinner = true;
+                System.out.println("\n" + player.getNickname() + ": Maltinha, I won!");
             }
         }
-    }
-    //after all players, already played
-    //chooseWinner(0); //Need to review this one too
 
-    private void chooseWinner(int index) {
-        //czar.chooseWinCard(index, playedCards);
-    }
-
-
-    public int randomFunction(int min, int max) {
-        return (int) ((Math.random() * (max - min)) + min);
+        return isWinner;
     }
 
     public void setServer(Server server) {
         this.server = server;
-    }
-
-    public void setCzar(Player czar) {
-        this.czar = czar;
     }
 }

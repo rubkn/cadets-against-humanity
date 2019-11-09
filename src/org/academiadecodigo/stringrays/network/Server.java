@@ -64,7 +64,7 @@ public class Server {
             }
 
             if (playerHandler.getPlayer().isCzar()) {
-                game.setCzar(playerHandler.getPlayer());
+                //game.setCzar(playerHandler.getPlayer());
                 playerHandler.getPlayer().waitForOthers(Messages.CZAR_TURN_MESSAGE);
             }
         }
