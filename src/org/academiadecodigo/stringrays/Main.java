@@ -23,6 +23,7 @@ public class Main {
         playerTwo.setNickname("João");
         playerThree.setNickname("Ricardo");
 
+        playerOne.setCzar(true);
         playerOne.setReady(true);
         playerTwo.setReady(true);
         playerThree.setReady(true);

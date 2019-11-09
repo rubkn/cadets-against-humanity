@@ -2,6 +2,7 @@ package org.academiadecodigo.stringrays.game;
 
 import org.academiadecodigo.stringrays.constants.Messages;
 import org.academiadecodigo.stringrays.game.cards.Card;
+import org.academiadecodigo.stringrays.game.cards.Hand;
 import org.academiadecodigo.stringrays.game.cards.PopulateDeck;
 import org.academiadecodigo.stringrays.constants.Constants;
 import org.academiadecodigo.stringrays.game.cards.Deck;
@@ -16,6 +17,7 @@ public class Game {
     private Deck blackDeck;
     private Deck whiteDeck;
     private HashMap<Card, Player> playedCards;
+    private Hand czarHand;
     private Card blackCard;
     private Vector<Player> players;
     private Player czar;
@@ -29,7 +31,6 @@ public class Game {
         blackDeck = PopulateDeck.fillDeck(Constants.blackDeck);
         whiteDeck = PopulateDeck.fillDeck(Constants.whiteDeck);
         players = new Vector<>();
-        playedCards = new HashMap<>();
     }
 
     public void waitingForPlayers() {
@@ -64,8 +65,10 @@ public class Game {
         players.get(0).setCzar(true);
 
         while (!playerWon()) {
+            System.out.println("\nStarting new round");
             newRound();
         }
+
     }
 
     private boolean playerWon() {
@@ -73,6 +76,7 @@ public class Game {
         for (Player player : players) {
             if (player.getScore() == Constants.ROUNDS_OR_SCORES_OR_O_CARAIO_TO_WIN) {
                 isWinner = true;
+                System.out.println("\n" + player.getNickname() + ": Maltinha, I won!");
             }
         }
         return isWinner;
@@ -82,13 +86,14 @@ public class Game {
         return blackDeck.getCard(randomFunction(0, blackDeck.getSizeDeck()));
     }
 
+
     public Player createPlayer() {
         //instance of new player
         Player newPlayer = new Player();
 
         //gives cards, to the new player
         for (int i = 0; i < Constants.PLAYER_HAND_SIZE; i++) {
-            giveCards(newPlayer);
+            drawWhiteCard(newPlayer);
         }
 
         //adding player to the list of players in game
@@ -97,10 +102,11 @@ public class Game {
         return newPlayer;
     }
 
-    private void giveCards(Player player) {
-        player.draw(whiteDeck.getCard(randomFunction(0, whiteDeck.getSizeDeck())));
+    private void drawWhiteCard(Player player) {
+        if (!player.isCzar()) {
+            player.draw(whiteDeck.getCard(randomFunction(0, whiteDeck.getSizeDeck())));
+        }
     }
-
 
     private void setNextCzar() {
 
@@ -129,17 +135,25 @@ public class Game {
 
     }
 
-    public HashMap<Card, Player> roundWhiteCards() {
-        return playedCards;
+    private void playersDrawWhiteCards() {
+        for (Player player : players) {
+            drawWhiteCard(player);
+        }
     }
 
     private void newRound() {
 
         blackCard = getBlackCard();
+        playedCards = new HashMap<>();
+        czarHand = new Hand();
+
+        System.out.println("Black Card: " + blackCard.getMessage());
 
         startNewRound(blackCard);
 
-        checkRoundWinner(czar.chooseWhiteCard(blackCard));
+        checkRoundWinner(czar.chooseWinner(blackCard, czarHand));
+
+        playersDrawWhiteCards();
 
         setNextCzar();
     }
@@ -153,7 +167,10 @@ public class Game {
         for (Player player : players) {
 
             if (!player.isCzar()) {
-                roundWhiteCards().put(player.chooseWhiteCard(blackCard), player);
+                Card whiteCardPlayed = player.chooseWhiteCard(blackCard);
+                System.out.println(player.getNickname() + " White Card: " + whiteCardPlayed.getMessage());
+                czarHand.addCard(whiteCardPlayed);
+                playedCards.put(whiteCardPlayed, player);
                 player.waitForOthers(Messages.PLAYER_TURN_WAIT);
                 continue;
             }

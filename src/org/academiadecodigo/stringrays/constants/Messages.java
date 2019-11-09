@@ -15,7 +15,7 @@ public class Messages {
     public final static String INVALID_OPTION = "ERROR: This is an invalid option.";
 
     public final static String PLAYER_TURN_MESSAGE = "Choose a White Card from your hand: ";
-    public final static String PLAYER_TURN_WAIT = "Other players are choosing their card...";
+    public final static String PLAYER_TURN_WAIT = "Wait...";
     public final static String PLAYER_TURN_WIN = "You won!";
     public final static String CZAR_TURN_MESSAGE = "You are the Czar. Wait...";
     public final static String CZAR_TURN_CHOOSE = "Which one is the funniest?";

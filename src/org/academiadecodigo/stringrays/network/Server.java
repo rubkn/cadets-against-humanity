@@ -58,7 +58,7 @@ public class Server {
         for (PlayerHandler playerHandler : playerHandlers) {
 
             if (!playerHandler.getPlayer().isCzar()) {
-                game.roundWhiteCards().put(playerHandler.getPlayer().chooseWhiteCard(blackCard), playerHandler.getPlayer());
+                //game.roundWhiteCards().put(playerHandler.getPlayer().chooseWhiteCard(blackCard), playerHandler.getPlayer());
                 playerHandler.getPlayer().waitForOthers(Messages.PLAYER_TURN_WAIT);
                 continue;
             }

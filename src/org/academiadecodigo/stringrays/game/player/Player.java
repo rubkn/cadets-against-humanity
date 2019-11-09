@@ -1,10 +1,12 @@
 package org.academiadecodigo.stringrays.game.player;
 
-import org.academiadecodigo.stringrays.constants.Messages;
 import org.academiadecodigo.stringrays.game.cards.Card;
 import org.academiadecodigo.stringrays.game.cards.Deck;
-import org.academiadecodigo.stringrays.game.cards.PlayerHand;
+import org.academiadecodigo.stringrays.game.cards.Hand;
 import org.academiadecodigo.stringrays.network.PlayerHandler;
+
+import java.util.Collection;
+import java.util.Set;
 
 public class Player {
 
@@ -12,12 +14,12 @@ public class Player {
     private boolean isCzar;
     private boolean alreadyPlayed;
     private int score = 0;
-    private PlayerHand hand;
+    private Hand hand;
     private PlayerHandler playerHandler;
     private boolean ready;
 
     public Player() {
-        this.hand = new PlayerHand();
+        this.hand = new Hand();
     }
 
     public void draw(Card card) {
@@ -33,16 +35,20 @@ public class Player {
         return getCard(index - 1);
     }
 
+    public Card chooseWinner(Card blackCard, Hand czarHand) {
+        int index = 1; //playerHandler.chooseCard(blackCard.getMessage(), getCardMessages(), Messages.PLAYER_TURN_MESSAGE);
+        Card czarChosenCard = czarHand.getCard(index - 1);
+        System.out.println("Black Card: " + blackCard.getMessage());
+        System.out.println("Czar " + getNickname() + " chose: " + czarChosenCard.getMessage());
+        return czarChosenCard;
+    }
+
     public void roundWon() {
         score++;
     }
 
     public Card getCard(int index) {
         return hand.getCard(index);
-    }
-
-    public Card chooseWinCard(int index, Deck playedCards) {
-        return playedCards.getCard(index);
     }
 
     public boolean isCzar() {
@@ -58,7 +64,7 @@ public class Player {
     }
 
     public void waitForOthers(String message) {
-        System.out.println("WAIT FOR OTHERS");
+        System.out.println(message);
         //playerHandler.sendMessageToPlayer(message);
     }
 
