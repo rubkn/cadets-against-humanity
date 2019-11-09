@@ -8,13 +8,14 @@ import java.util.Vector;
 
 public class PopulateDeck {
 
+    public static Deck fillDeck(String path) {
 
+        Deck deck = null;
+        File file;
 
-    public static Deck fillDeck( String path) throws IOException {
-
-
-            Deck deck = new Deck();
-            File file = new File(path);
+        try {
+            deck = new Deck();
+            file = new File(path);
 
             BufferedReader bufferedReader;
             bufferedReader = new BufferedReader((new FileReader(file)));
@@ -25,6 +26,10 @@ public class PopulateDeck {
             }
 
             bufferedReader.close();
-            return deck;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return deck;
     }
 }

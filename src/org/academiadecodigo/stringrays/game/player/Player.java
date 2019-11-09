@@ -4,6 +4,7 @@ package org.academiadecodigo.stringrays.game.player;
 import org.academiadecodigo.stringrays.game.cards.Card;
 import org.academiadecodigo.stringrays.game.cards.Deck;
 import org.academiadecodigo.stringrays.game.cards.PlayerHand;
+import org.academiadecodigo.stringrays.network.PlayerHandler;
 
 import java.util.Vector;
 
@@ -14,6 +15,7 @@ public class Player {
     private boolean alreadyPlayed;
     private int score = 0;
     private PlayerHand hand;
+    private PlayerHandler playerHandler;
 
     public Player() {
         this.hand = new PlayerHand();

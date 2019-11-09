@@ -16,7 +16,7 @@ public class Game {
     private Vector<Player> players;
     private Player czar;
 
-    public void init() throws IOException {
+    public void init() {
 
         blackDeck = PopulateDeck.fillDeck(Constants.blackDeck);
         whiteDeck = PopulateDeck.fillDeck(Constants.whiteDeck);
@@ -27,10 +27,9 @@ public class Game {
 
     public void start() {
 
-
     }
 
-    private void createPlayer() {
+    public Player createPlayer() {
         //instance of new player
         Player newPlayer = new Player();
 
@@ -40,7 +39,9 @@ public class Game {
         }
 
         //adding player to the list of players in game
-        players.add(new Player());
+        players.add(newPlayer);
+
+        return newPlayer;
     }
 
     private void giveCards(Player player) {

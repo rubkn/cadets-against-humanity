@@ -2,8 +2,8 @@ package org.academiadecodigo.stringrays.network;
 
 import org.academiadecodigo.bootcamp.Prompt;
 import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
-import org.academiadecodigo.bootcamp.scanners.string.StringInputScanner;
 import org.academiadecodigo.stringrays.game.player.Player;
+
 
 import java.io.*;
 import java.net.Socket;
@@ -40,20 +40,16 @@ public class PlayerHandler implements Runnable {
         }
     }
 
-    private void communicationServer() throws NoSuchElementException {
+    private void communicationServer() {
 
-        BufferedReader in;
-        String message;
+        int message;
 
-
-        //in = new BufferedReader(new InputStreamReader(playerSocket.getInputStream()));
         try {
-            StringInputScanner scanner = new StringInputScanner();
-            scanner.setMessage("DIZ QUALQUER MERDA");
+            MenuInputScanner scanner = new MenuInputScanner(player.getCardMessages());
+            scanner.setMessage("CHOOSE A CARD");
             message = prompt.getUserInput(scanner);
-            System.out.println(message);
 
-            //in.readLine();
+            System.out.println(message);
 
         } catch (NoSuchElementException e) {
             e.printStackTrace();
@@ -66,7 +62,7 @@ public class PlayerHandler implements Runnable {
             }*/
         }
 
-        private int promptCards ( int numberOfCards){
+        private int promptCards (int numberOfCards) {
             MenuInputScanner scanner = new MenuInputScanner(player.getCardMessages());
             scanner.setError("NOT A VALID CARD INDEX");
             scanner.setMessage("\n CHOOSE A WHITE CARD TO PLAY: ");

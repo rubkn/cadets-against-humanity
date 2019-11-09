@@ -1,7 +1,7 @@
 package org.academiadecodigo.stringrays.network;
 
 import org.academiadecodigo.stringrays.constants.Constants;
-import org.academiadecodigo.stringrays.game.player.Player;
+import org.academiadecodigo.stringrays.game.Game;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -14,13 +14,21 @@ public class Server {
 
     private Socket playerSocket;
     private Vector<PlayerHandler> playerHandlers;
+    private Game game;
 
 
     public Server() {
         playerHandlers = new Vector<>();
+        init();
+    }
+
+    private void init() {
+        game = new Game();
+        game.init();
     }
 
     public void start() {
+
 
         ExecutorService fixedPool = Executors.newFixedThreadPool(Constants.MAX_NUMBER_OF_PLAYERS);
 
@@ -33,7 +41,7 @@ public class Server {
                 playerSocket = serverSocket.accept();
 
                 //TODO REMOVE new Player() AND USE Game.Class METHOD
-                fixedPool.execute(new PlayerHandler(this, playerSocket, new Player()));
+                fixedPool.execute(new PlayerHandler(this, playerSocket, game.createPlayer()));
             }
         } catch (
                 IOException e) {
