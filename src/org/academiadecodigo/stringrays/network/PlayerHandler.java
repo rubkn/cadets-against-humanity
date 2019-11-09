@@ -2,6 +2,7 @@ package org.academiadecodigo.stringrays.network;
 
 import org.academiadecodigo.bootcamp.Prompt;
 import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
+import org.academiadecodigo.stringrays.constants.Messages;
 import org.academiadecodigo.stringrays.game.player.Player;
 
 
@@ -44,6 +45,13 @@ public class PlayerHandler implements Runnable {
         }
     }
 
+    public int chooseCard(String blackCard) {
+        MenuInputScanner scanner = new MenuInputScanner(player.getCardMessages());
+        scanner.setMessage("Black Card: " + blackCard + "\n\n" + Messages.PLAYER_TURN_MESSAGE);
+        scanner.setError(Messages.MAIN_MENU_ERROR);
+        return  prompt.getUserInput(scanner);
+    }
+
     private void communicationServer() {
 
         int message;
@@ -66,12 +74,6 @@ public class PlayerHandler implements Runnable {
             }*/
         }
 
-        private int promptCards (int numberOfCards) {
-            MenuInputScanner scanner = new MenuInputScanner(player.getCardMessages());
-            scanner.setError("NOT A VALID CARD INDEX");
-            scanner.setMessage("\n CHOOSE A WHITE CARD TO PLAY: ");
-            return prompt.getUserInput(scanner);
-        }
 
         public void sendMessageToPlayer (String message){
 
