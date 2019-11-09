@@ -2,12 +2,16 @@ package org.academiadecodigo.stringrays.game.player;
 
 
 import org.academiadecodigo.stringrays.game.cards.Card;
+import org.academiadecodigo.stringrays.game.cards.Deck;
 import org.academiadecodigo.stringrays.game.cards.PlayerHand;
+
+import java.util.Vector;
 
 public class Player {
 
     private String nickname;
     private boolean isCzar;
+    private boolean alreadyPlayed;
     private int score = 0;
     private PlayerHand hand;
 
@@ -31,12 +35,24 @@ public class Player {
         return hand.getCard(index);
     }
 
+    public Card chooseWinCard(int index, Deck playedCards) {
+        return playedCards.getCard(index);
+    }
+
     public boolean isCzar() {
         return isCzar;
     }
 
     public void setCzar(boolean czar) {
         isCzar = czar;
+    }
+
+    public boolean alreadyPlayed() {
+        return alreadyPlayed;
+    }
+
+    public void setAlreadyPlayed(boolean alreadyPlayed) {
+        this.alreadyPlayed = alreadyPlayed;
     }
 
     public String getNickname() {
