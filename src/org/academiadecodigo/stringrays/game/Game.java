@@ -35,25 +35,7 @@ public class Game implements Runnable {
             start();
         }
     }
-    /*
-    public void checkPlayersAreReady() {
 
-        boolean ready = true;
-
-        for (Player playerFromList : players) {
-            if (!playerFromList.isReady()) {
-                ready = false;
-            }
-        }
-
-        if (!ready) {
-            checkPlayersAreReady();
-            return;
-        }
-
-        return;
-    }
-    */
 
     public void start() {
 
