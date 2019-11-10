@@ -22,7 +22,7 @@ public class PlayerHandler implements Runnable {
     private GameStatus newStatus = GameStatus.PLAYER_WAITING;
     private GameStatus oldStatus;
 
-    public PlayerHandler(Server server, Socket playerSocket, Player player) {
+    PlayerHandler(Server server, Socket playerSocket, Player player) {
         this.server = server;
         this.playerSocket = playerSocket;
         this.player = player;

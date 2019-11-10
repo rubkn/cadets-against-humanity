@@ -9,11 +9,10 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Server {
+public class Server implements Runnable{
 
     private Socket playerSocket;
     private ArrayList<PlayerHandler> playerHandlers;
@@ -79,15 +78,20 @@ public class Server {
 
     public void broadcastNewRound() {
         for (PlayerHandler playerHandler : playerHandlers) {
-            if (playerHandler.getPlayer().isCzar()) {
-                playerHandler.setStatus(GameStatus.CZAR_WAITING);
-            } else {
+            if (!playerHandler.getPlayer().isCzar()) {
                 playerHandler.setStatus(GameStatus.PLAYER_TURN);
+                continue;
             }
+            playerHandler.setStatus(GameStatus.CZAR_WAITING);
         }
     }
 
     public Game getGame() {
         return game;
+    }
+
+    @Override
+    public void run() {
+        start();
     }
 }

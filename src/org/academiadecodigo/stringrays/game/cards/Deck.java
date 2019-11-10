@@ -1,13 +1,15 @@
 package org.academiadecodigo.stringrays.game.cards;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Vector;
 
 public class Deck {
 
-    protected Vector<Card> deck;
+    protected ArrayList<Card> deck;
 
     public Deck() {
-        deck = new Vector<>();
+        deck = new ArrayList<>();
     }
 
     public Card getCard(int index) {

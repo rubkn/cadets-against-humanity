@@ -4,6 +4,9 @@ import org.academiadecodigo.stringrays.game.Game;
 import org.academiadecodigo.stringrays.game.player.Player;
 import org.academiadecodigo.stringrays.network.Server;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -28,9 +31,9 @@ public class Main {
         game.start();
         */
 
-        Server server = new Server();
+        ExecutorService executor = Executors.newSingleThreadExecutor();
 
-        server.start();
+        executor.execute(new Server());
 
     }
 }

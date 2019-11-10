@@ -9,8 +9,8 @@ import org.academiadecodigo.stringrays.game.cards.Deck;
 import org.academiadecodigo.stringrays.game.player.Player;
 import org.academiadecodigo.stringrays.network.Server;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Vector;
 
 public class Game {
 
@@ -18,7 +18,7 @@ public class Game {
     private Deck whiteDeck;
     private HashMap<Card, Player> playedCards;
     private Hand czarHand;
-    private Vector<Player> players;
+    private ArrayList<Player> players;
     private Player czar;
     private Server server;
     private Card blackCard;
@@ -30,7 +30,7 @@ public class Game {
     public void init() {
         blackDeck = PopulateDeck.fillDeck(Constants.blackDeck);
         whiteDeck = PopulateDeck.fillDeck(Constants.whiteDeck);
-        players = new Vector<>();
+        players = new ArrayList<>();
     }
 
     /*
@@ -102,6 +102,11 @@ public class Game {
 
         server.broadcastNewRound();
 
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         //check if all players minus czar have played a white card
         while (playedCards.size() < players.size() - 1) {
 
@@ -144,9 +149,9 @@ public class Game {
                 int lastCzar = players.indexOf(player);
                 player.setCzar(false);
 
-                //if czar is the last index of the vector, sets czar for the first index (0)
+                //if czar is the last index of the ArrayList, sets czar for the first index (0)
                 if (lastCzar == players.size() - 1) {
-                    czar = players.firstElement();
+                    czar = players.get(0);
                     czar.setCzar(true);
                     return;
                 }
