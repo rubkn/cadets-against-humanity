@@ -155,8 +155,8 @@ public class Game implements Runnable {
         }
     }
 
-    public void checkRoundWinner(Card czarCard) {
-        this.czarCard = czarCard;
+    public void checkRoundWinner(Card choosenCard) {
+        czarCard = choosenCard;
         winner = playedCards.get(czarCard);
         winner.roundWon();
     }
@@ -190,11 +190,14 @@ public class Game implements Runnable {
     public void play(Card card, Player player) {
         czarHand.addCard(card);
         playedCards.put(card, player);
-        System.out.println(czarHand.getSizeDeck());
     }
 
     public void setGameStart(boolean gameStart) {
         this.gameStart = gameStart;
+    }
+
+    public boolean isGameStart() {
+        return gameStart;
     }
 
     @Override

@@ -19,7 +19,6 @@ public class Server {
     private int numberOfReadyPlayers = 0;
     private ExecutorService fixedPool;
 
-
     public Server() {
         playerHandlers = new Vector<>();
         init();
@@ -38,11 +37,14 @@ public class Server {
 
             ServerSocket serverSocket = new ServerSocket(Constants.PORT_NUMBER);
 
-            while (true) {
+            while (!game.isGameStart()) {
 
                 playerSocket = serverSocket.accept();
 
-                fixedPool.execute(new PlayerHandler(this, playerSocket, game.createPlayer()));
+                if (!game.isGameStart()) {
+
+                    fixedPool.execute(new PlayerHandler(this, playerSocket, game.createPlayer()));
+                }
             }
         } catch (IOException e) {
             e.getStackTrace();

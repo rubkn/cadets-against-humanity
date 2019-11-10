@@ -125,12 +125,14 @@ public class PlayerHandler implements Runnable {
         Card czarCard = server.getGame().getCzarHand().getCard(index);
 
         server.getGame().checkRoundWinner(czarCard);
+
     }
 
     public int chooseCard(String blackCard, String[] cardsMessages, String message) {
         MenuInputScanner scanner = new MenuInputScanner(cardsMessages);
         scanner.setMessage("\tBlack Card: " + blackCard + "\n\n" + message);
         scanner.setError(Messages.INVALID_OPTION);
+
         return prompt.getUserInput(scanner) - Constants.CONVERT_PROMPT_VIEW_INDEX;
     }
 
@@ -155,6 +157,5 @@ public class PlayerHandler implements Runnable {
 
     public void setStatus(GameStatus status) {
         this.newStatus = status;
-        System.out.println(player.getNickname() + " mudei para o estado " + status);
     }
 }
