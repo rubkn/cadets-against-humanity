@@ -16,7 +16,8 @@ public class Messages {
 
     public final static String PLAYER_TURN_MESSAGE = "Choose a White Card from your hand: ";
     public final static String PLAYER_TURN_WAIT = "Wait...";
-    public final static String PLAYER_TURN_WIN = "You won!";
+    public final static String PLAYER_WAITING_FOR_OTHERS = "Wait for others players to play...";
+    public final static String PLAYER_WIN = " won this round.";
     public final static String CZAR_TURN_MESSAGE = "You are the Czar. Wait for other players to play a White Card...";
     public final static String CZAR_TURN_CHOOSE = "Which one is the funniest?";
 

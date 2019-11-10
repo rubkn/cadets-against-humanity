@@ -120,7 +120,7 @@ public class PlayerHandler implements Runnable {
 
         int index = chooseCard(server.getGame().getBlackCard().getMessage(),
                 server.getGame().getCzarHand().getCardMessages(),
-                Messages.CZAR_TURN_MESSAGE);
+                Messages.CZAR_TURN_CHOOSE);
 
         Card czarCard = server.getGame().getCzarHand().getCard(index);
 

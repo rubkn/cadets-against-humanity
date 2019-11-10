@@ -1,5 +1,6 @@
 package org.academiadecodigo.stringrays.game;
 
+import org.academiadecodigo.stringrays.constants.Messages;
 import org.academiadecodigo.stringrays.constants.Random;
 import org.academiadecodigo.stringrays.game.cards.Card;
 import org.academiadecodigo.stringrays.game.cards.Hand;
@@ -17,9 +18,10 @@ public class Game implements Runnable {
     private Deck blackDeck;
     private Deck whiteDeck;
     private volatile HashMap<Card, Player> playedCards;
-    private Hand czarHand;
+    private volatile Hand czarHand;
     private volatile ArrayList<Player> players;
     private Player czar;
+    private Player winner;
     private Server server;
     private Card blackCard;
     private volatile boolean gameStart;
@@ -73,17 +75,6 @@ public class Game implements Runnable {
 
         System.out.println("Black Card: " + blackCard.getMessage());
 
-        startNewRound();
-
-        //checkRoundWinner(czar.chooseWinner(blackCard, czarHand));
-
-        playersDrawWhiteCards();
-
-        setNextCzar();
-    }
-
-    private void startNewRound() {
-
         server.broadcastNewRound();
 
         while (playedCards.size() < players.size() - 1) {
@@ -92,30 +83,15 @@ public class Game implements Runnable {
 
         server.broadcastCzarRound();
 
-        while(czarHand.getSizeDeck() == players.size() - 2) {
-          //fuck let's martelar
+        while (czarHand.getSizeDeck() > players.size() - 2) {
+            //System.out.println("Waiting for czar...");
         }
 
+        server.broadcastMessage("\n" + winner.getNickname() + Messages.PLAYER_WIN);
 
+        playersDrawWhiteCards();
 
-        //check if all players minus czar have played a white card
-        //while (playedCards.size() < players.size() - 1) {}
-
-        /*for (Player player : players) {
-
-            if (!player.isCzar()) {
-                //Card whiteCardPlayed = player.chooseWhiteCard(blackCard);
-                //czarHand.addCard(whiteCardPlayed);
-                //playedCards.put(whiteCardPlayed, player);
-                player.waitForOthers(Messages.PLAYER_TURN_WAIT);
-                continue;
-            }
-
-            if (player.isCzar()) {
-                czar = player;
-                player.waitForOthers(Messages.CZAR_TURN_MESSAGE);
-            }
-        }*/
+        setNextCzar();
     }
 
     private void drawWhiteCard(Player player) {
@@ -155,12 +131,15 @@ public class Game implements Runnable {
 
     private void playersDrawWhiteCards() {
         for (Player player : players) {
-            drawWhiteCard(player);
+            if (!player.isCzar()) {
+                drawWhiteCard(player);
+            }
         }
     }
 
     public void checkRoundWinner(Card czarCard) {
-        playedCards.get(czarCard).roundWon();
+        winner = playedCards.get(czarCard);
+        winner.roundWon();
     }
 
     private boolean playerWon() {

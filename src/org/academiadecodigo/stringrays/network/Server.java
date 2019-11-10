@@ -39,7 +39,7 @@ public class Server {
 
             ServerSocket serverSocket = new ServerSocket(Constants.PORT_NUMBER);
 
-            while (true) {
+            while (true) { //TODO CHANGE TO !game.isGameStart or !game.getGameStart
 
                 playerSocket = serverSocket.accept();
 
@@ -88,7 +88,6 @@ public class Server {
     }
 
     public void broadcastCzarRound() {
-
         for (PlayerHandler playerHandler : playerHandlers) {
             if (playerHandler.getPlayer().isCzar()) {
                 playerHandler.setStatus(GameStatus.CZAR_TURN);
@@ -97,8 +96,6 @@ public class Server {
             playerHandler.setStatus(GameStatus.PLAYER_WAITING);
         }
     }
-
-
 
     public Game getGame() {
         return game;
