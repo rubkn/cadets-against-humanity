@@ -81,6 +81,9 @@ public class Game implements Runnable {
     private void resetPlayers() {
         for (Player player : players) {
             player.reset();
+            for (int i = 0; i < Constants.PLAYER_HAND_SIZE; i++) {
+                drawWhiteCard(player);
+            }
         }
     }
 

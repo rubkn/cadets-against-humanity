@@ -1,5 +1,6 @@
 package org.academiadecodigo.stringrays.game.player;
 
+import org.academiadecodigo.stringrays.constants.Constants;
 import org.academiadecodigo.stringrays.game.cards.Card;
 import org.academiadecodigo.stringrays.game.cards.Hand;
 
@@ -54,6 +55,7 @@ public class Player {
     public void reset() {
         score = 0;
         isCzar = false;
+        hand = new Hand();
     }
 
     public void setReady(boolean ready) {
