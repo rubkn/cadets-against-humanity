@@ -25,7 +25,7 @@ public class Server {
     }
 
     private void init() {
-        fixedPool = Executors.newFixedThreadPool(Constants.MAX_NUMBER_OF_PLAYERS);
+        fixedPool = Executors.newFixedThreadPool(Constants.MAX_NUMBER_OF_PLAYERS + 1); //TODO +1 for the gameEngine itself
         game = new Game();
         game.setServer(this);
         fixedPool.execute(game);
