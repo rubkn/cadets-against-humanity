@@ -3,26 +3,26 @@ package org.academiadecodigo.stringrays.network;
 import org.academiadecodigo.stringrays.constants.Constants;
 import org.academiadecodigo.stringrays.game.Game;
 import org.academiadecodigo.stringrays.game.GameStatus;
-import org.academiadecodigo.stringrays.game.cards.Card;
 import org.academiadecodigo.stringrays.game.player.Player;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server {
 
     private Socket playerSocket;
-    private Vector<PlayerHandler> playerHandlers;
+    private ArrayList<PlayerHandler> playerHandlers;
     private Game game;
     private int numberOfReadyPlayers = 0;
 
 
     public Server() {
-        playerHandlers = new Vector<>();
+        playerHandlers = new ArrayList<>();
         init();
     }
 
@@ -59,7 +59,7 @@ public class Server {
         }
     }
 
-    public Vector<PlayerHandler> getPlayerHandlers() {
+    public ArrayList<PlayerHandler> getPlayerHandlers() {
         return playerHandlers;
     }
 
@@ -77,11 +77,10 @@ public class Server {
         }
     }
 
-    public void broadcastRound() {
+    public void broadcastNewRound() {
         for (PlayerHandler playerHandler : playerHandlers) {
             if (playerHandler.getPlayer().isCzar()) {
                 playerHandler.setStatus(GameStatus.CZAR_WAITING);
-
             } else {
                 playerHandler.setStatus(GameStatus.PLAYER_TURN);
             }

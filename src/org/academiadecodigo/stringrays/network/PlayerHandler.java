@@ -55,8 +55,6 @@ public class PlayerHandler implements Runnable {
 
     private void waitingForInstructions() {
 
-        //System.out.println("waitingForInstructions: " + player.getNickname());
-
         if (newStatus == oldStatus) {
             return;
         }

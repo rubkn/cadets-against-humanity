@@ -1,6 +1,5 @@
 package org.academiadecodigo.stringrays.game;
 
-import org.academiadecodigo.stringrays.constants.Messages;
 import org.academiadecodigo.stringrays.constants.Random;
 import org.academiadecodigo.stringrays.game.cards.Card;
 import org.academiadecodigo.stringrays.game.cards.Hand;
@@ -101,9 +100,11 @@ public class Game {
 
     private void startNewRound(Card blackCard) {
 
-        server.broadcastRound();
+        server.broadcastNewRound();
 
+        //check if all players minus czar have played a white card
         while (playedCards.size() < players.size() - 1) {
+
         }
 
         /*for (Player player : players) {
