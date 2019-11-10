@@ -84,7 +84,7 @@ public class Server {
                 playerHandler.setStatus(GameStatus.CZAR_TURN);
                 continue;
             }
-            playerHandler.setStatus(GameStatus.PLAYER_WAITING);
+            playerHandler.setStatus(GameStatus.CZAR_CHOOSING);
         }
     }
 

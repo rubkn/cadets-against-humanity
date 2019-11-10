@@ -69,9 +69,15 @@ public class PlayerHandler implements Runnable {
             return;
         }
 
+        if (newStatus == GameStatus.CZAR_CHOOSING) {
+            broadcastWhiteCardsSelect();
+        }
+
         if (newStatus == GameStatus.CZAR_WAITING) {
             out.println(Colors.BG_BLACK + Colors.WHITE + "\n\t" + " Black Card: " + server.getGame().getBlackCard().getMessage() + Colors.BG_RESET + Colors.RESET + "\n");
+
             out.println(Messages.CZAR_TURN_MESSAGE);
+
         }
 
         if (newStatus == GameStatus.CZAR_TURN) {
@@ -126,6 +132,15 @@ public class PlayerHandler implements Runnable {
         Card czarCard = server.getGame().getCzarHand().getCard(index);
 
         server.getGame().checkRoundWinner(czarCard);
+
+    }
+
+    private void broadcastWhiteCardsSelect() {
+        out.println(Colors.BG_BLACK + Colors.WHITE + "\n\t" + " Black Card: " + server.getGame().getBlackCard().getMessage() + Colors.BG_RESET + Colors.RESET + "\n");
+
+        for (String cardMessage : server.getGame().getCzarHand().getCardMessages()) {
+            out.println("White Card: " + cardMessage);
+        }
 
     }
 

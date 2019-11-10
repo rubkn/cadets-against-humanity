@@ -53,6 +53,12 @@ public class Game implements Runnable {
             newRound();
         }
 
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         start();
     }
 
@@ -98,14 +104,21 @@ public class Game implements Runnable {
             //waiting for czar to choose card
         }
 
-        for (Player player : playedCards.values()) {
-            System.out.println(player.getNickname());
+        //print to server cards played
+        for (Card card : playedCards.keySet()) {
+            System.out.println(playedCards.get(card).getNickname() + " played White Card: " + card.getMessage());
         }
 
+        //print player who wins
+        System.out.println("\n" + Colors.GREEN + winner.getNickname() + Messages.PLAYER_WIN + Colors.RESET);
         server.broadcastMessage("\n" + Colors.GREEN + winner.getNickname() + Messages.PLAYER_WIN + Colors.RESET);
 
+        //prints black card of the round
+        System.out.println("\t" + Colors.BG_BLACK + Colors.WHITE + " Black Card: " + blackCard.getMessage() + Colors.BG_RESET + Colors.RESET + "\n");
         server.broadcastMessage("\t" + Colors.BG_BLACK + Colors.WHITE + " Black Card: " + blackCard.getMessage() + Colors.BG_RESET + Colors.RESET + "\n");
 
+        //prints the white card that won
+        System.out.println("\t" + Colors.BG_WHITE + Colors.BLACK + " White Card: " + czarCard.getMessage() + Colors.BG_RESET + Colors.RESET);
         server.broadcastMessage("\t" + Colors.BG_WHITE + Colors.BLACK + " White Card: " + czarCard.getMessage() + Colors.BG_RESET + Colors.RESET);
 
         playersDrawWhiteCards();
@@ -176,6 +189,8 @@ public class Game implements Runnable {
             if (player.getScore() == Constants.SCORE_TO_WIN) {
                 isWinner = true;
                 System.out.println(Colors.GREEN + "\n" + player.getNickname() + Messages.PLAYER_WON + Colors.RESET);
+                server.broadcastMessage(Colors.GREEN + "\n" + player.getNickname() + Messages.PLAYER_WON + Colors.RESET);
+                return isWinner;
             }
         }
 

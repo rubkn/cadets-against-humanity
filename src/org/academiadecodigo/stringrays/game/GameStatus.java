@@ -6,4 +6,5 @@ public enum GameStatus {
     CZAR_WAITING,
     PLAYER_TURN,
     PLAYER_WAITING,
+    CZAR_CHOOSING,
 }

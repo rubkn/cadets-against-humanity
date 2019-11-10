@@ -6,7 +6,7 @@ public class Messages {
     public final static String LOGIN_WELCOME = "Welcome to Ca(r)dets Against Humanity!\n";
     public final static String LOGIN_MESSAGE = "Please insert your username: ";
     public final static String LOGIN_ERROR = Colors.RED + "ERROR: Not a valid username" + Colors.RESET;
-    public final static String NEW_ROUND = "\nStarting a new round...";
+    public final static String NEW_ROUND = "\033[H\033[2J" + "Starting a new round...";
 
     public final static String LOGIN_WAIT = "Waiting for other players to be ready...";
 
