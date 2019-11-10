@@ -16,13 +16,13 @@ public class Game implements Runnable {
 
     private Deck blackDeck;
     private Deck whiteDeck;
-    private HashMap<Card, Player> playedCards;
+    private volatile HashMap<Card, Player> playedCards;
     private Hand czarHand;
-    private ArrayList<Player> players;
+    private volatile ArrayList<Player> players;
     private Player czar;
     private Server server;
     private Card blackCard;
-    private boolean gameStart = false;
+    private volatile boolean gameStart;
 
     public void init() {
         blackDeck = PopulateDeck.fillDeck(Constants.blackDeck);
@@ -31,9 +31,7 @@ public class Game implements Runnable {
     }
 
     public void waitingForInstructions() {
-        System.out.println("Start");
         if (gameStart) {
-
             start();
         }
     }
@@ -107,7 +105,7 @@ public class Game implements Runnable {
         server.broadcastNewRound();
 
         while (playedCards.size() < players.size() - 1) {
-            System.out.println("Waiting for players to play...");
+            //System.out.println("Waiting for players to play...");
         }
 
         //check if all players minus czar have played a white card
