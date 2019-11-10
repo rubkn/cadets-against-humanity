@@ -1,6 +1,5 @@
 package org.academiadecodigo.stringrays.game.player;
 
-import org.academiadecodigo.stringrays.constants.Constants;
 import org.academiadecodigo.stringrays.game.cards.Card;
 import org.academiadecodigo.stringrays.game.cards.Hand;
 

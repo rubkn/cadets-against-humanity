@@ -41,8 +41,6 @@ public class PlayerHandler implements Runnable {
 
     private void init() {
 
-        //player.setPlayerHandler(this);
-
         server.getPlayerHandlers().add(this);
 
         try {

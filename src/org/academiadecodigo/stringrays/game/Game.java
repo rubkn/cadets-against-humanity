@@ -71,7 +71,6 @@ public class Game implements Runnable {
             drawWhiteCard(newPlayer);
         }
 
-        //newPlayer.setGame(this);
         //adding player to the list of players in game
         players.add(newPlayer);
 
