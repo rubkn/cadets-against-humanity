@@ -24,6 +24,7 @@ public class Game implements Runnable {
     private Player winner;
     private Server server;
     private Card blackCard;
+    private Card czarCard;
     private volatile boolean gameStart;
 
     public void init() {
@@ -41,7 +42,7 @@ public class Game implements Runnable {
 
     public void start() {
 
-        //checkPlayersAreReady();
+        //TODO RESET PLAYER SCORE AFTER EACH GAME
 
         players.get(0).setCzar(true);
 
@@ -49,6 +50,8 @@ public class Game implements Runnable {
             System.out.println("\nStarting new round");
             newRound();
         }
+
+        start();
     }
 
     public Player createPlayer() {
@@ -88,6 +91,10 @@ public class Game implements Runnable {
         }
 
         server.broadcastMessage("\n" + winner.getNickname() + Messages.PLAYER_WIN);
+
+        server.broadcastMessage("\tBlack Card: " + blackCard.getMessage() + "\n");
+
+        server.broadcastMessage("\tWhite Card: " + czarCard.getMessage());
 
         playersDrawWhiteCards();
 
@@ -138,6 +145,7 @@ public class Game implements Runnable {
     }
 
     public void checkRoundWinner(Card czarCard) {
+        this.czarCard = czarCard;
         winner = playedCards.get(czarCard);
         winner.roundWon();
     }
@@ -149,7 +157,7 @@ public class Game implements Runnable {
         for (Player player : players) {
             if (player.getScore() == Constants.SCORE_TO_WIN) {
                 isWinner = true;
-                System.out.println("\n" + player.getNickname() + ": Maltinha, before being the adult in the room... I won!");
+                System.out.println("\n" + player.getNickname() + Messages.PLAYER_WON);
             }
         }
 

@@ -3,7 +3,6 @@ package org.academiadecodigo.stringrays.network;
 import org.academiadecodigo.stringrays.constants.Constants;
 import org.academiadecodigo.stringrays.game.Game;
 import org.academiadecodigo.stringrays.game.GameStatus;
-import org.academiadecodigo.stringrays.game.player.Player;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -44,8 +43,6 @@ public class Server {
                 playerSocket = serverSocket.accept();
 
                 fixedPool.execute(new PlayerHandler(this, playerSocket, game.createPlayer()));
-
-                System.out.println("New player connected...");
             }
         } catch (IOException e) {
             e.getStackTrace();
@@ -54,21 +51,13 @@ public class Server {
 
     public void gameReady() {
         numberOfReadyPlayers++;
-        if (numberOfReadyPlayers == 3) {
+        if (numberOfReadyPlayers >= 3 && numberOfReadyPlayers == playerHandlers.size()) {
             game.setGameStart(true);
         }
     }
 
     public ArrayList<PlayerHandler> getPlayerHandlers() {
         return playerHandlers;
-    }
-
-    public void sendMessageToPlayer(Player player, String message) {
-        for (PlayerHandler playerHandler : playerHandlers) {
-            if (playerHandler.getPlayer().getNickname().equals(player.getNickname())) {
-                playerHandler.sendMessageToPlayer(message);
-            }
-        }
     }
 
     public void broadcastMessage(String message) {

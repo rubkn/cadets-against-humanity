@@ -11,7 +11,6 @@ public class Player {
 
     private String nickname;
     private boolean isCzar;
-    private boolean alreadyPlayed;
     private int score = 0;
     private Hand hand;
     private PlayerHandler playerHandler;
@@ -30,6 +29,7 @@ public class Player {
 
     }
 
+    /*
     public void chooseWhiteCard(Card blackCard) {
 
         if (isCzar) {
@@ -48,6 +48,7 @@ public class Player {
         System.out.println("Czar " + getNickname() + " chose: " + czarChosenCard.getMessage());
         return czarChosenCard;
     }
+    */
 
     public void roundWon() {
         score++;
@@ -65,10 +66,6 @@ public class Player {
         isCzar = czar;
     }
 
-    public void waitForOthers(String message) {
-        playerHandler.sendMessageToPlayer(message);
-    }
-
     public String getNickname() {
         return nickname;
     }
@@ -81,18 +78,8 @@ public class Player {
         return hand.getCardMessages();
     }
 
-
     public void setPlayerHandler(PlayerHandler playerHandler) {
         this.playerHandler = playerHandler;
-    }
-
-    public boolean isReady() {
-        return ready;
-    }
-
-    public void setReady(boolean ready) {
-        System.out.println(getNickname() + " is ready!");
-        this.ready = ready;
     }
 
     public int getScore() {

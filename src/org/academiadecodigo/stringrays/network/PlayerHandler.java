@@ -31,7 +31,6 @@ public class PlayerHandler implements Runnable {
     @Override
     public void run() {
         init();
-        System.out.println(server.getPlayerHandlers().size()); //TODO CHECK PLAYERHANDLER SIZE
         chooseNickname();
         askIfReady();
         while (!Thread.currentThread().isInterrupted()) {
@@ -70,6 +69,7 @@ public class PlayerHandler implements Runnable {
         }
 
         if (newStatus == GameStatus.CZAR_WAITING) {
+            out.println("\nBlack Card: " + server.getGame().getBlackCard().getMessage() + "\n");
             out.println(Messages.CZAR_TURN_MESSAGE);
         }
 
@@ -100,7 +100,7 @@ public class PlayerHandler implements Runnable {
 
         prompt.getUserInput(scanner);
 
-        player.setReady(true);
+        server.broadcastMessage(player.getNickname() + " is ready!");
 
         server.gameReady();
     }
@@ -129,7 +129,7 @@ public class PlayerHandler implements Runnable {
 
     public int chooseCard(String blackCard, String[] cardsMessages, String message) {
         MenuInputScanner scanner = new MenuInputScanner(cardsMessages);
-        scanner.setMessage("Black Card: " + blackCard + "\n\n" + message);
+        scanner.setMessage("\tBlack Card: " + blackCard + "\n\n" + message);
         scanner.setError(Messages.INVALID_OPTION);
         return prompt.getUserInput(scanner) - Constants.CONVERT_PROMPT_VIEW_INDEX;
     }

@@ -6,5 +6,4 @@ public enum GameStatus {
     CZAR_WAITING,
     PLAYER_TURN,
     PLAYER_WAITING,
-    END_ROUND_WAITING;
 }
