@@ -73,7 +73,7 @@ public class Game implements Runnable {
 
         System.out.println("Black Card: " + blackCard.getMessage());
 
-        startNewRound(blackCard);
+        startNewRound();
 
         //checkRoundWinner(czar.chooseWinner(blackCard, czarHand));
 
@@ -82,13 +82,21 @@ public class Game implements Runnable {
         setNextCzar();
     }
 
-    private void startNewRound(Card blackCard) {
+    private void startNewRound() {
 
         server.broadcastNewRound();
 
         while (playedCards.size() < players.size() - 1) {
             //System.out.println("Waiting for players to play...");
         }
+
+        server.broadcastCzarRound();
+
+        while(czarHand.getSizeDeck() == players.size() - 2) {
+          //fuck let's martelar
+        }
+
+
 
         //check if all players minus czar have played a white card
         //while (playedCards.size() < players.size() - 1) {}
@@ -188,6 +196,7 @@ public class Game implements Runnable {
     public void play(Card card, Player player) {
         czarHand.addCard(card);
         playedCards.put(card, player);
+        System.out.println(czarHand.getSizeDeck());
     }
 
     public void setGameStart(boolean gameStart) {

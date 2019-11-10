@@ -120,15 +120,15 @@ public class PlayerHandler implements Runnable {
 
         int index = chooseCard(server.getGame().getBlackCard().getMessage(),
                 server.getGame().getCzarHand().getCardMessages(),
-                Messages.PLAYER_TURN_MESSAGE);
+                Messages.CZAR_TURN_MESSAGE);
 
-        Card czarCard = player.getCard(index);
+        Card czarCard = server.getGame().getCzarHand().getCard(index);
 
         server.getGame().checkRoundWinner(czarCard);
     }
 
-    public int chooseCard(String blackCard, String[] whiteCards, String message) {
-        MenuInputScanner scanner = new MenuInputScanner(whiteCards);
+    public int chooseCard(String blackCard, String[] cardsMessages, String message) {
+        MenuInputScanner scanner = new MenuInputScanner(cardsMessages);
         scanner.setMessage("Black Card: " + blackCard + "\n\n" + message);
         scanner.setError(Messages.INVALID_OPTION);
         return prompt.getUserInput(scanner) - Constants.CONVERT_PROMPT_VIEW_INDEX;

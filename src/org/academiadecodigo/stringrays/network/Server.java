@@ -87,7 +87,21 @@ public class Server {
         }
     }
 
+    public void broadcastCzarRound() {
+
+        for (PlayerHandler playerHandler : playerHandlers) {
+            if (playerHandler.getPlayer().isCzar()) {
+                playerHandler.setStatus(GameStatus.CZAR_TURN);
+                continue;
+            }
+            playerHandler.setStatus(GameStatus.PLAYER_WAITING);
+        }
+    }
+
+
+
     public Game getGame() {
         return game;
     }
+
 }
