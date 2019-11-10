@@ -18,6 +18,7 @@ public class Server {
     private Game game;
     private int numberOfReadyPlayers = 0;
     private ExecutorService fixedPool;
+    private Vector<String> nicknames;
 
     public Server() {
         playerHandlers = new Vector<>();
@@ -27,6 +28,7 @@ public class Server {
     private void init() {
         fixedPool = Executors.newFixedThreadPool(Constants.MAX_NUMBER_OF_PLAYERS + 1); //TODO +1 for the gameEngine itself
         game = new Game();
+        nicknames = new Vector<>();
         game.setServer(this);
         fixedPool.execute(game);
     }
@@ -94,4 +96,7 @@ public class Server {
         return game;
     }
 
+    public Vector<String> getNicknames() {
+        return nicknames;
+    }
 }

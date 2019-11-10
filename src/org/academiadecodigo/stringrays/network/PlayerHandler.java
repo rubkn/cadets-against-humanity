@@ -51,6 +51,7 @@ public class PlayerHandler implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        out.println(Messages.LOGIN_WELCOME);
     }
 
     private void waitingForInstructions() {
@@ -88,28 +89,20 @@ public class PlayerHandler implements Runnable {
     }
 
     private void chooseNickname() { //TODO CHECK IF THE NICKNAME IS REPEATED
-        out.println(Messages.LOGIN_WELCOME);
+
         StringInputScanner scanner = new StringInputScanner();
         scanner.setMessage(Messages.LOGIN_MESSAGE);
 
         String name = prompt.getUserInput(scanner);
 
-
-        for (PlayerHandler playerhandler :
-                server.getPlayerHandlers()) {
-
-            if (playerhandler.getPlayer().getNickname() == (null)) {
-                playerhandler.getPlayer().setNickname(name);
-                continue;
-            }
-            if (playerhandler.getPlayer().getNickname().equals(name)) {
-                out.println(Messages.LOGIN_ERROR);
-                chooseNickname();
-
-            }
-
+        if (server.getNicknames().contains(name)) {
+            out.println(Messages.LOGIN_ERROR);
+            chooseNickname();
+            return;
         }
 
+        server.getNicknames().add(name);
+        player.setNickname(name);
 
     }
 
