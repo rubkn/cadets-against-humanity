@@ -1,8 +1,8 @@
 package org.academiadecodigo.stringrays.network;
 
 import org.academiadecodigo.stringrays.constants.Constants;
-import org.academiadecodigo.stringrays.constants.Messages;
 import org.academiadecodigo.stringrays.game.Game;
+import org.academiadecodigo.stringrays.game.GameStatus;
 import org.academiadecodigo.stringrays.game.cards.Card;
 import org.academiadecodigo.stringrays.game.player.Player;
 
@@ -43,9 +43,7 @@ public class Server {
 
                 playerSocket = serverSocket.accept();
 
-                Player newPlayer = game.createPlayer();
-
-                fixedPool.execute(new PlayerHandler(this, playerSocket, newPlayer));
+                fixedPool.execute(new PlayerHandler(this, playerSocket, game.createPlayer()));
 
                 System.out.println("New player connected...");
             }
@@ -56,7 +54,7 @@ public class Server {
 
     public void gameReady() {
         numberOfReadyPlayers++;
-        if(numberOfReadyPlayers == 2){
+        if (numberOfReadyPlayers == 3) {
             game.start();
         }
     }
@@ -77,5 +75,20 @@ public class Server {
         for (PlayerHandler playerHandler : playerHandlers) {
             playerHandler.sendMessageToPlayer(message);
         }
+    }
+
+    public void broadcastRound() {
+        for (PlayerHandler playerHandler : playerHandlers) {
+            if (playerHandler.getPlayer().isCzar()) {
+                playerHandler.setStatus(GameStatus.CZAR_WAITING);
+
+            } else {
+                playerHandler.setStatus(GameStatus.PLAYER_TURN);
+            }
+        }
+    }
+
+    public Game getGame() {
+        return game;
     }
 }

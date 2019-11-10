@@ -9,6 +9,7 @@ import org.academiadecodigo.stringrays.constants.Constants;
 import org.academiadecodigo.stringrays.game.cards.Deck;
 import org.academiadecodigo.stringrays.game.player.Player;
 import org.academiadecodigo.stringrays.network.Server;
+
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -21,6 +22,7 @@ public class Game {
     private Vector<Player> players;
     private Player czar;
     private Server server;
+    private Card blackCard;
 
     public Game() {
         init();
@@ -73,6 +75,7 @@ public class Game {
             drawWhiteCard(newPlayer);
         }
 
+        newPlayer.setGame(this);
         //adding player to the list of players in game
         players.add(newPlayer);
 
@@ -81,7 +84,7 @@ public class Game {
 
     private void newRound() {
 
-        Card blackCard = getBlackCard();
+        blackCard = getNewBlackCard();
         playedCards = new HashMap<>();
         czarHand = new Hand();
 
@@ -98,13 +101,17 @@ public class Game {
 
     private void startNewRound(Card blackCard) {
 
-        for (Player player : players) {
+        server.broadcastRound();
+
+        while (playedCards.size() < players.size() - 1) {
+        }
+
+        /*for (Player player : players) {
 
             if (!player.isCzar()) {
-                Card whiteCardPlayed = player.chooseWhiteCard(blackCard);
-                System.out.println(player.getNickname() + " White Card: " + whiteCardPlayed.getMessage());
-                czarHand.addCard(whiteCardPlayed);
-                playedCards.put(whiteCardPlayed, player);
+                //Card whiteCardPlayed = player.chooseWhiteCard(blackCard);
+                //czarHand.addCard(whiteCardPlayed);
+                //playedCards.put(whiteCardPlayed, player);
                 player.waitForOthers(Messages.PLAYER_TURN_WAIT);
                 continue;
             }
@@ -113,7 +120,7 @@ public class Game {
                 czar = player;
                 player.waitForOthers(Messages.CZAR_TURN_MESSAGE);
             }
-        }
+        }*/
     }
 
     private void drawWhiteCard(Player player) {
@@ -122,7 +129,7 @@ public class Game {
         }
     }
 
-    private Card getBlackCard() {
+    private Card getNewBlackCard() {
         return blackDeck.getCard(Random.getRandomNumber(0, blackDeck.getSizeDeck()));
     }
 
@@ -157,8 +164,8 @@ public class Game {
         }
     }
 
-    private void checkRoundWinner(Card whiteCard) {
-        playedCards.get(whiteCard).roundWon();
+    public void checkRoundWinner(Card czarCard) {
+        playedCards.get(czarCard).roundWon();
     }
 
     private boolean playerWon() {
@@ -175,7 +182,24 @@ public class Game {
         return isWinner;
     }
 
+    public HashMap<Card, Player> getPlayedCards() {
+        return playedCards;
+    }
+
     public void setServer(Server server) {
         this.server = server;
+    }
+
+    public Card getBlackCard() {
+        return blackCard;
+    }
+
+    public Hand getCzarHand() {
+        return czarHand;
+    }
+
+    public void play(Card card, Player player){
+        czarHand.addCard(card);
+        playedCards.put(card, player);
     }
 }

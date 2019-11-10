@@ -2,13 +2,10 @@ package org.academiadecodigo.stringrays.game.player;
 
 import org.academiadecodigo.stringrays.constants.Constants;
 import org.academiadecodigo.stringrays.constants.Messages;
+import org.academiadecodigo.stringrays.game.Game;
 import org.academiadecodigo.stringrays.game.cards.Card;
-import org.academiadecodigo.stringrays.game.cards.Deck;
 import org.academiadecodigo.stringrays.game.cards.Hand;
 import org.academiadecodigo.stringrays.network.PlayerHandler;
-
-import java.util.Collection;
-import java.util.Set;
 
 public class Player {
 
@@ -19,6 +16,7 @@ public class Player {
     private Hand hand;
     private PlayerHandler playerHandler;
     private boolean ready;
+    private Game game;
 
     public Player() {
         this.hand = new Hand();
@@ -32,9 +30,15 @@ public class Player {
 
     }
 
-    public Card chooseWhiteCard(Card blackCard) {
+    public void chooseWhiteCard(Card blackCard) {
+
+        if (isCzar) {
+            playerHandler.sendMessageToPlayer(Messages.CZAR_TURN_MESSAGE);
+            return;
+        }
+
         int cardIndex = playerHandler.chooseCard(blackCard.getMessage(), getCardMessages(), Messages.PLAYER_TURN_MESSAGE);
-        return getCard(cardIndex - Constants.CONVERT_PROMPT_VIEW_INDEX);
+        game.getPlayedCards().put(getCard(cardIndex - Constants.CONVERT_PROMPT_VIEW_INDEX), this);
     }
 
     public Card chooseWinner(Card blackCard, Hand czarHand) {
@@ -61,13 +65,8 @@ public class Player {
         isCzar = czar;
     }
 
-    public boolean alreadyPlayed() {
-        return alreadyPlayed;
-    }
-
     public void waitForOthers(String message) {
-        System.out.println(message);
-        //playerHandler.sendMessageToPlayer(message);
+        playerHandler.sendMessageToPlayer(message);
     }
 
     public String getNickname() {
@@ -81,7 +80,6 @@ public class Player {
     public String[] getCardMessages() {
         return hand.getCardMessages();
     }
-
 
 
     public void setPlayerHandler(PlayerHandler playerHandler) {
@@ -99,5 +97,9 @@ public class Player {
 
     public int getScore() {
         return score;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 }
