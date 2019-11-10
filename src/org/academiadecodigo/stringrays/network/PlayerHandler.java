@@ -3,6 +3,7 @@ package org.academiadecodigo.stringrays.network;
 import org.academiadecodigo.bootcamp.Prompt;
 import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
 import org.academiadecodigo.bootcamp.scanners.string.StringInputScanner;
+import org.academiadecodigo.stringrays.constants.Colors;
 import org.academiadecodigo.stringrays.constants.Constants;
 import org.academiadecodigo.stringrays.constants.Messages;
 import org.academiadecodigo.stringrays.game.GameStatus;
@@ -69,7 +70,7 @@ public class PlayerHandler implements Runnable {
         }
 
         if (newStatus == GameStatus.CZAR_WAITING) {
-            out.println("\n\tBlack Card: " + server.getGame().getBlackCard().getMessage() + "\n");
+            out.println(Colors.BLACK + "\n\t" + Messages.BLACK_CARD + server.getGame().getBlackCard().getMessage() + "\n");
             out.println(Messages.CZAR_TURN_MESSAGE);
         }
 
@@ -129,7 +130,7 @@ public class PlayerHandler implements Runnable {
 
     public int chooseCard(String blackCard, String[] cardsMessages, String message) {
         MenuInputScanner scanner = new MenuInputScanner(cardsMessages);
-        scanner.setMessage("\tBlack Card: " + blackCard + "\n\n" + message);
+        scanner.setMessage("\t" + Messages.BLACK_CARD + blackCard + "\n\n" + message);
         scanner.setError(Messages.INVALID_OPTION);
         return prompt.getUserInput(scanner) - Constants.CONVERT_PROMPT_VIEW_INDEX;
     }
