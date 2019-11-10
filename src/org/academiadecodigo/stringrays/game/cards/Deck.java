@@ -18,16 +18,10 @@ public class Deck {
         deck.add(card);
     }
 
-    public int getSizeDeck()
-    {
+    public int getSizeDeck() {
         return deck.size();
 
     }
-
-
-
-
-
 
 
 }
