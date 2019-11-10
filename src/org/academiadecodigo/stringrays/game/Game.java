@@ -12,7 +12,7 @@ import org.academiadecodigo.stringrays.network.Server;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Game {
+public class Game implements Runnable {
 
     private Deck blackDeck;
     private Deck whiteDeck;
@@ -22,10 +22,7 @@ public class Game {
     private Player czar;
     private Server server;
     private Card blackCard;
-
-    public Game() {
-        init();
-    }
+    private boolean gameStart = false;
 
     public void init() {
         blackDeck = PopulateDeck.fillDeck(Constants.blackDeck);
@@ -33,6 +30,13 @@ public class Game {
         players = new ArrayList<>();
     }
 
+    public void waitingForInstructions() {
+        System.out.println("Start");
+        if (gameStart) {
+
+            start();
+        }
+    }
     /*
     public void checkPlayersAreReady() {
 
@@ -91,7 +95,7 @@ public class Game {
 
         startNewRound(blackCard);
 
-        checkRoundWinner(czar.chooseWinner(blackCard, czarHand));
+        //checkRoundWinner(czar.chooseWinner(blackCard, czarHand));
 
         playersDrawWhiteCards();
 
@@ -102,15 +106,12 @@ public class Game {
 
         server.broadcastNewRound();
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        //check if all players minus czar have played a white card
         while (playedCards.size() < players.size() - 1) {
-
+            System.out.println("Waiting for players to play...");
         }
+
+        //check if all players minus czar have played a white card
+        //while (playedCards.size() < players.size() - 1) {}
 
         /*for (Player player : players) {
 
@@ -204,8 +205,20 @@ public class Game {
         return czarHand;
     }
 
-    public void play(Card card, Player player){
+    public void play(Card card, Player player) {
         czarHand.addCard(card);
         playedCards.put(card, player);
+    }
+
+    public void setGameStart(boolean gameStart) {
+        this.gameStart = gameStart;
+    }
+
+    @Override
+    public void run() {
+        init();
+        while (true) {
+            waitingForInstructions();
+        }
     }
 }

@@ -1,11 +1,6 @@
 package org.academiadecodigo.stringrays;
 
-import org.academiadecodigo.stringrays.game.Game;
-import org.academiadecodigo.stringrays.game.player.Player;
 import org.academiadecodigo.stringrays.network.Server;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Main {
 
@@ -31,9 +26,7 @@ public class Main {
         game.start();
         */
 
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-
-        executor.execute(new Server());
-
+        Server server = new Server();
+        server.start();
     }
 }
