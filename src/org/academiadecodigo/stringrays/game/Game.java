@@ -84,7 +84,7 @@ public class Game implements Runnable {
         playedCards = new ConcurrentHashMap<>();
         czarHand = new Hand();
 
-        System.out.println(Messages.BLACK_CARD + blackCard.getMessage());
+        System.out.println(Colors.BG_BLACK + Colors.WHITE + " Black Card: " + blackCard.getMessage() + Colors.BG_RESET + Colors.RESET);
 
         server.broadcastNewRound();
 
@@ -98,11 +98,11 @@ public class Game implements Runnable {
             //waiting for czar to choose card
         }
 
-        server.broadcastMessage("\n" + winner.getNickname() + Messages.PLAYER_WIN);
+        server.broadcastMessage("\n" + Colors.GREEN + winner.getNickname() + Messages.PLAYER_WIN + Colors.RESET);
 
-        server.broadcastMessage("\t" + Messages.BLACK_CARD + blackCard.getMessage() + "\n");
+        server.broadcastMessage("\t" + Colors.BG_BLACK + Colors.WHITE + " Black Card: " + blackCard.getMessage() + Colors.BG_RESET + Colors.RESET + "\n");
 
-        server.broadcastMessage("\t" + Messages.WHITE_CARD + czarCard.getMessage());
+        server.broadcastMessage("\t" + Colors.BG_WHITE + Colors.BLACK + " White Card: " + czarCard.getMessage() + Colors.BG_RESET + Colors.RESET);
 
         playersDrawWhiteCards();
 

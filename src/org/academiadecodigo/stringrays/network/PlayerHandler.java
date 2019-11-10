@@ -70,7 +70,7 @@ public class PlayerHandler implements Runnable {
         }
 
         if (newStatus == GameStatus.CZAR_WAITING) {
-            out.println(Colors.BLACK + "\n\t" + Messages.BLACK_CARD + server.getGame().getBlackCard().getMessage() + "\n");
+            out.println(Colors.BG_BLACK + Colors.WHITE + "\n\t" + " Black Card: " + server.getGame().getBlackCard().getMessage() + Colors.BG_RESET + Colors.RESET + "\n");
             out.println(Messages.CZAR_TURN_MESSAGE);
         }
 
@@ -131,7 +131,7 @@ public class PlayerHandler implements Runnable {
 
     public int chooseCard(String blackCard, String[] cardsMessages, String message) {
         MenuInputScanner scanner = new MenuInputScanner(cardsMessages);
-        scanner.setMessage("\t" + Messages.BLACK_CARD + blackCard + "\n\n" + message);
+        scanner.setMessage("\t" + Colors.BG_BLACK + Colors.WHITE + " Black Card: " + blackCard + Colors.BG_RESET + Colors.RESET + "\n\n" + message);
         scanner.setError(Messages.INVALID_OPTION);
 
         return prompt.getUserInput(scanner) - Constants.CONVERT_PROMPT_VIEW_INDEX;
