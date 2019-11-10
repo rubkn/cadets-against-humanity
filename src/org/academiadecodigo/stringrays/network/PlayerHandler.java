@@ -91,8 +91,28 @@ public class PlayerHandler implements Runnable {
         out.println(Messages.LOGIN_WELCOME);
         StringInputScanner scanner = new StringInputScanner();
         scanner.setMessage(Messages.LOGIN_MESSAGE);
-        player.setNickname(prompt.getUserInput(scanner));
+
+        String name = prompt.getUserInput(scanner);
+
+
+        for (PlayerHandler playerhandler :
+                server.getPlayerHandlers()) {
+
+            if (playerhandler.getPlayer().getNickname() == (null)) {
+                playerhandler.getPlayer().setNickname(name);
+                continue;
+            }
+            if (playerhandler.getPlayer().getNickname().equals(name)) {
+                out.println(Messages.LOGIN_ERROR);
+                chooseNickname();
+
+            }
+
+        }
+
+
     }
+
 
     public void askIfReady() {
 
