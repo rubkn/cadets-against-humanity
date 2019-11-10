@@ -70,7 +70,7 @@ public class PlayerHandler implements Runnable {
         }
 
         if (newStatus == GameStatus.CZAR_WAITING) {
-            out.println(Colors.BG_BLACK + Colors.WHITE + "\n\t" + " Black Card: " + server.getGame().getBlackCard().getMessage() + Colors.BG_RESET + Colors.RESET + "\n");
+            out.println("\n\t" + Colors.BG_BLACK + Colors.WHITE + " Black Card: " + server.getGame().getBlackCard().getMessage() + Colors.BG_RESET + Colors.RESET + "\n");
             out.println(Messages.CZAR_TURN_MESSAGE);
         }
 
