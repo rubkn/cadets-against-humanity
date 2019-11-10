@@ -40,7 +40,7 @@ public class PlayerHandler implements Runnable {
 
     private void init() {
 
-        player.setPlayerHandler(this);
+        //player.setPlayerHandler(this);
 
         server.getPlayerHandlers().add(this);
 
@@ -69,7 +69,7 @@ public class PlayerHandler implements Runnable {
         }
 
         if (newStatus == GameStatus.CZAR_WAITING) {
-            out.println("\nBlack Card: " + server.getGame().getBlackCard().getMessage() + "\n");
+            out.println("\n\tBlack Card: " + server.getGame().getBlackCard().getMessage() + "\n");
             out.println(Messages.CZAR_TURN_MESSAGE);
         }
 

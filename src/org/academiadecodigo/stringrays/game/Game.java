@@ -9,17 +9,16 @@ import org.academiadecodigo.stringrays.constants.Constants;
 import org.academiadecodigo.stringrays.game.cards.Deck;
 import org.academiadecodigo.stringrays.game.player.Player;
 import org.academiadecodigo.stringrays.network.Server;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Game implements Runnable {
 
     private Deck blackDeck;
     private Deck whiteDeck;
-    private volatile HashMap<Card, Player> playedCards;
+    private volatile ConcurrentHashMap<Card, Player> playedCards;
     private volatile Hand czarHand;
-    private volatile ArrayList<Player> players;
+    private volatile Vector<Player> players;
     private Player czar;
     private Player winner;
     private Server server;
@@ -30,7 +29,7 @@ public class Game implements Runnable {
     public void init() {
         blackDeck = PopulateDeck.fillDeck(Constants.blackDeck);
         whiteDeck = PopulateDeck.fillDeck(Constants.whiteDeck);
-        players = new ArrayList<>();
+        players = new Vector<>();
     }
 
     public void waitingForInstructions() {
@@ -42,12 +41,13 @@ public class Game implements Runnable {
 
     public void start() {
 
-        //TODO RESET PLAYER SCORE AFTER EACH GAME
+        resetPlayers();
 
         players.get(0).setCzar(true);
 
         while (!playerWon()) {
-            System.out.println("\nStarting new round");
+            System.out.println(Messages.NEW_ROUND);
+            server.broadcastMessage(Messages.NEW_ROUND);
             newRound();
         }
 
@@ -63,17 +63,22 @@ public class Game implements Runnable {
             drawWhiteCard(newPlayer);
         }
 
-        newPlayer.setGame(this);
+        //newPlayer.setGame(this);
         //adding player to the list of players in game
         players.add(newPlayer);
 
         return newPlayer;
     }
 
+    private void resetPlayers() {
+        for (Player player : players) {
+            player.reset();
+        }
+    }
     private void newRound() {
 
         blackCard = getNewBlackCard();
-        playedCards = new HashMap<>();
+        playedCards = new ConcurrentHashMap<>();
         czarHand = new Hand();
 
         System.out.println("Black Card: " + blackCard.getMessage());
@@ -81,13 +86,13 @@ public class Game implements Runnable {
         server.broadcastNewRound();
 
         while (playedCards.size() < players.size() - 1) {
-            //System.out.println("Waiting for players to play...");
+            //waiting for players to play
         }
 
         server.broadcastCzarRound();
 
         while (czarHand.getSizeDeck() > players.size() - 2) {
-            //System.out.println("Waiting for czar...");
+            //waiting for czar to choose card
         }
 
         server.broadcastMessage("\n" + winner.getNickname() + Messages.PLAYER_WIN);
@@ -99,6 +104,12 @@ public class Game implements Runnable {
         playersDrawWhiteCards();
 
         setNextCzar();
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void drawWhiteCard(Player player) {
@@ -162,10 +173,6 @@ public class Game implements Runnable {
         }
 
         return isWinner;
-    }
-
-    public HashMap<Card, Player> getPlayedCards() {
-        return playedCards;
     }
 
     public void setServer(Server server) {

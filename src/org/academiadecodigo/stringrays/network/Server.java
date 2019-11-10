@@ -7,21 +7,21 @@ import org.academiadecodigo.stringrays.game.GameStatus;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
+import java.util.Vector;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server {
 
     private Socket playerSocket;
-    private ArrayList<PlayerHandler> playerHandlers;
+    private Vector<PlayerHandler> playerHandlers;
     private Game game;
     private int numberOfReadyPlayers = 0;
     private ExecutorService fixedPool;
 
 
     public Server() {
-        playerHandlers = new ArrayList<>();
+        playerHandlers = new Vector<>();
         init();
     }
 
@@ -38,7 +38,7 @@ public class Server {
 
             ServerSocket serverSocket = new ServerSocket(Constants.PORT_NUMBER);
 
-            while (true) { //TODO CHANGE TO !game.isGameStart or !game.getGameStart
+            while (true) {
 
                 playerSocket = serverSocket.accept();
 
@@ -51,12 +51,12 @@ public class Server {
 
     public void gameReady() {
         numberOfReadyPlayers++;
-        if (numberOfReadyPlayers >= 3 && numberOfReadyPlayers == playerHandlers.size()) {
+        if (numberOfReadyPlayers >= Constants.MIN_NUMBER_OF_PLAYERS && numberOfReadyPlayers == playerHandlers.size()) {
             game.setGameStart(true);
         }
     }
 
-    public ArrayList<PlayerHandler> getPlayerHandlers() {
+    public Vector<PlayerHandler> getPlayerHandlers() {
         return playerHandlers;
     }
 

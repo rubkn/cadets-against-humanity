@@ -1,7 +1,5 @@
 package org.academiadecodigo.stringrays.game.player;
 
-import org.academiadecodigo.stringrays.constants.Constants;
-import org.academiadecodigo.stringrays.constants.Messages;
 import org.academiadecodigo.stringrays.game.Game;
 import org.academiadecodigo.stringrays.game.cards.Card;
 import org.academiadecodigo.stringrays.game.cards.Hand;
@@ -14,7 +12,6 @@ public class Player {
     private int score = 0;
     private Hand hand;
     private PlayerHandler playerHandler;
-    private boolean ready;
     private Game game;
 
     public Player() {
@@ -23,32 +20,7 @@ public class Player {
 
     public void draw(Card card) {
         hand.addCard(card);
-
-        //draw from the white deck and insert into player's hand
-        //hand.addCard(whiteDeck.getCard());
-
     }
-
-    /*
-    public void chooseWhiteCard(Card blackCard) {
-
-        if (isCzar) {
-            playerHandler.sendMessageToPlayer(Messages.CZAR_TURN_MESSAGE);
-            return;
-        }
-
-        int cardIndex = playerHandler.chooseCard(blackCard.getMessage(), getCardMessages(), Messages.PLAYER_TURN_MESSAGE);
-        game.getPlayedCards().put(getCard(cardIndex - Constants.CONVERT_PROMPT_VIEW_INDEX), this);
-    }
-
-    public Card chooseWinner(Card blackCard, Hand czarHand) {
-        int index = 1; //playerHandler.chooseCard(blackCard.getMessage(), getCardMessages(), Messages.PLAYER_TURN_MESSAGE);
-        Card czarChosenCard = czarHand.getCard(index - Constants.CONVERT_PROMPT_VIEW_INDEX);
-        System.out.println("Black Card: " + blackCard.getMessage());
-        System.out.println("Czar " + getNickname() + " chose: " + czarChosenCard.getMessage());
-        return czarChosenCard;
-    }
-    */
 
     public void roundWon() {
         score++;
@@ -88,5 +60,10 @@ public class Player {
 
     public void setGame(Game game) {
         this.game = game;
+    }
+
+    public void reset() {
+        score = 0;
+        isCzar = false;
     }
 }
