@@ -108,7 +108,7 @@ public class PlayerHandler implements Runnable {
         prompt.getUserInput(scanner);
 
         server.broadcastMessage(player.getNickname() + " is ready!");
-
+        player.setReady(true);
         server.gameReady();
     }
 

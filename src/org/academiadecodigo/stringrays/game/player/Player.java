@@ -9,6 +9,7 @@ public class Player {
     private boolean isCzar;
     private int score = 0;
     private Hand hand;
+    private boolean ready;
 
     public Player() {
         this.hand = new Hand();
@@ -53,5 +54,13 @@ public class Player {
     public void reset() {
         score = 0;
         isCzar = false;
+    }
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
+    }
+
+    public boolean isReady() {
+        return ready;
     }
 }

@@ -64,7 +64,9 @@ public class Server {
 
     public void broadcastMessage(String message) {
         for (PlayerHandler playerHandler : playerHandlers) {
-            playerHandler.sendMessageToPlayer(message);
+            if (playerHandler.getPlayer().isReady()) {
+                playerHandler.sendMessageToPlayer(message);
+            }
         }
     }
 
