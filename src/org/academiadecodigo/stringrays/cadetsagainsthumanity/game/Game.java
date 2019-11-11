@@ -1,15 +1,15 @@
-package org.academiadecodigo.stringrays.game;
+package org.academiadecodigo.stringrays.cadetsagainsthumanity.game;
 
-import org.academiadecodigo.stringrays.constants.Colors;
-import org.academiadecodigo.stringrays.constants.Messages;
-import org.academiadecodigo.stringrays.constants.Random;
-import org.academiadecodigo.stringrays.game.cards.Card;
-import org.academiadecodigo.stringrays.game.cards.Hand;
-import org.academiadecodigo.stringrays.game.cards.PopulateDeck;
-import org.academiadecodigo.stringrays.constants.Constants;
-import org.academiadecodigo.stringrays.game.cards.Deck;
-import org.academiadecodigo.stringrays.game.player.Player;
-import org.academiadecodigo.stringrays.network.Server;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.constants.Colors;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.constants.Constants;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.constants.Messages;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.constants.Random;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.game.cards.Card;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.game.cards.Deck;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.game.cards.Hand;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.game.cards.PopulateDeck;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.game.player.Player;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.network.Server;
 
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;

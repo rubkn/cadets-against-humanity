@@ -1,4 +1,4 @@
-package org.academiadecodigo.stringrays.constants;
+package org.academiadecodigo.stringrays.cadetsagainsthumanity.constants;
 
 public class Random {
 

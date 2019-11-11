@@ -1,8 +1,8 @@
-package org.academiadecodigo.stringrays.network;
+package org.academiadecodigo.stringrays.cadetsagainsthumanity.network;
 
-import org.academiadecodigo.stringrays.constants.Constants;
-import org.academiadecodigo.stringrays.game.Game;
-import org.academiadecodigo.stringrays.game.GameStatus;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.constants.Constants;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.game.Game;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.game.GameStatus;
 
 import java.io.IOException;
 import java.net.ServerSocket;

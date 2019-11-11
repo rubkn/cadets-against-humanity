@@ -1,14 +1,14 @@
-package org.academiadecodigo.stringrays.network;
+package org.academiadecodigo.stringrays.cadetsagainsthumanity.network;
 
 import org.academiadecodigo.bootcamp.Prompt;
 import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
 import org.academiadecodigo.bootcamp.scanners.string.StringInputScanner;
-import org.academiadecodigo.stringrays.constants.Colors;
-import org.academiadecodigo.stringrays.constants.Constants;
-import org.academiadecodigo.stringrays.constants.Messages;
-import org.academiadecodigo.stringrays.game.GameStatus;
-import org.academiadecodigo.stringrays.game.cards.Card;
-import org.academiadecodigo.stringrays.game.player.Player;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.constants.Colors;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.constants.Constants;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.constants.Messages;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.game.GameStatus;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.game.cards.Card;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.game.player.Player;
 
 import java.io.*;
 import java.net.Socket;

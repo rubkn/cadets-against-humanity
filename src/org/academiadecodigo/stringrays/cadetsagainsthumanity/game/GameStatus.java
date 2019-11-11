@@ -1,4 +1,4 @@
-package org.academiadecodigo.stringrays.game;
+package org.academiadecodigo.stringrays.cadetsagainsthumanity.game;
 
 public enum GameStatus {
 

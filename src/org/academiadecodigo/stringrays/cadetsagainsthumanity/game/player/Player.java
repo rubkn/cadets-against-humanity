@@ -1,7 +1,7 @@
-package org.academiadecodigo.stringrays.game.player;
+package org.academiadecodigo.stringrays.cadetsagainsthumanity.game.player;
 
-import org.academiadecodigo.stringrays.game.cards.Card;
-import org.academiadecodigo.stringrays.game.cards.Hand;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.game.cards.Card;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.game.cards.Hand;
 
 public class Player {
 

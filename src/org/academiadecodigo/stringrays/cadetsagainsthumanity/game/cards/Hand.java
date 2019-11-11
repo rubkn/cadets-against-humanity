@@ -1,4 +1,4 @@
-package org.academiadecodigo.stringrays.game.cards;
+package org.academiadecodigo.stringrays.cadetsagainsthumanity.game.cards;
 
 public class Hand extends Deck {
 

@@ -1,7 +1,7 @@
-package org.academiadecodigo.stringrays;
+package org.academiadecodigo.stringrays.cadetsagainsthumanity;
 
-import org.academiadecodigo.stringrays.constants.Constants;
-import org.academiadecodigo.stringrays.network.Server;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.constants.Constants;
+import org.academiadecodigo.stringrays.cadetsagainsthumanity.network.Server;
 
 public class Main {
 
