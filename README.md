@@ -17,11 +17,11 @@ Java, IntelliJ, Linux, Mac OS, Google Slides, Prompt-View Library, Maven, Git, K
 
 ## Authors
 
-* **Ruben Brandão** - [rvbrd](https://github.com/rvbrd)
+* **Bernardo Telo** - [Chickenwithoutwing](https://github.com/Chickenwithoutwing)
 * **João Madeira** - [hattomhub](https://github.com/hattomhub)
 * **Josué Almeida** - [z3ux](https://github.com/z3ux)
-* **Bernardo Telo** - [Chickenwithoutwing](https://github.com/Chickenwithoutwing)
 * **Ricardo Santos** - [ricardosantos](https://github.com/ricardosantos96)
+* **Ruben Brandão** - [rvbrd](https://github.com/rvbrd)
 
 
 # Thank you!
